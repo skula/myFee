@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+	<TextView
+		android:id="@+id/month_label"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:textColor="#6a6a6a"
+		android:textSize="24px"
+		android:textStyle="bold" 
+		android:text="Novembre"/>
+
+	<TextView
+		android:id="@+id/month_total"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:textColor="#6a6a6a"
+		android:textSize="34px" 
+		android:text="300€"/>
+		
+	<ExpandableListView
+        android:id="@+id/month_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="#3c3c3c"
+        android:groupIndicator="@null" />
+</LinearLayout>
