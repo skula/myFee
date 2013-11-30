@@ -15,7 +15,6 @@ import com.skula.myfee.models.Category;
 import com.skula.myfee.models.Fee;
  
 public class MonthListAdapter extends BaseExpandableListAdapter {
- 
     private Context _context;
     private List<Category> headers; 
     private Map<String, List<Fee>> childs;
@@ -29,8 +28,7 @@ public class MonthListAdapter extends BaseExpandableListAdapter {
  
     @Override
     public Object getChild(int groupPosition, int childPosititon) {
-        return this.childs.get(this.headers.get(groupPosition).getLabel())
-                .get(childPosititon);
+        return this.childs.get(this.headers.get(groupPosition).getLabel()).get(childPosititon);
     }
  
     @Override
@@ -62,13 +60,14 @@ public class MonthListAdapter extends BaseExpandableListAdapter {
  
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this.childs.get(this.headers.get(groupPosition))
+        return this.childs.get(this.headers.get(groupPosition).getLabel())
                 .size();
     }
  
     @Override
     public Object getGroup(int groupPosition) {
-        return this.headers.get(groupPosition);
+    	Category c = this.headers.get(groupPosition);
+        return c;
     }
  
     @Override

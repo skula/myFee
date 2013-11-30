@@ -56,13 +56,15 @@ public class HistoryListAdapter extends BaseExpandableListAdapter {
         amount.setText(fee.getAmount());
 		TextView label = (TextView) convertView.findViewById(R.id.histo_list_item_label);
         label.setText(fee.getLabel());
+		TextView cat = (TextView) convertView.findViewById(R.id.histo_list_item_category);
+        cat.setText(fee.getCategory());
 		
         return convertView;
     }
  
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this.childs.get(this.headers.get(groupPosition))
+        return this.childs.get(this.headers.get(groupPosition).getLabel())
                 .size();
     }
  

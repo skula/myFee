@@ -143,7 +143,44 @@ public class DatabaseService {
 		return -1;
 	}
 	
-	/******************** REQUETES DE LA MORT QUI TUE****************************/
+	public List<Category> getCategories(){
+		List<Category> res = new ArrayList<Category>();
+		Cursor cursor = database.query(TABLE_NAME_CATEGORY, new String[] { "id, label, color, budget" }, null, null, null, null, null);
+		if (cursor.moveToFirst()) {
+			do {
+				Category cat = new Category();
+				cat.setId(cursor.getString(0));
+				cat.setLabel(cursor.getString(1));
+				cat.setColor(cursor.getString(2));
+				cat.setBudget(cursor.getString(3));
+				res.add(cat);
+			} while (cursor.moveToNext());
+		}
+		if (cursor != null && !cursor.isClosed()) {
+			cursor.close();
+		}
+		return res;
+	}
+	
+	public Category getCategory(String id){
+		Cursor cursor = database.query(TABLE_NAME_CATEGORY, new String[] { "id, label, color, budget" }, "id=" + id, null, null, null, null);
+		if (cursor.moveToFirst()) {
+			do {
+				Category cat = new Category();
+				cat.setId(cursor.getString(0));
+				cat.setLabel(cursor.getString(1));
+				cat.setColor(cursor.getString(2));
+				cat.setBudget(cursor.getString(3));
+				return cat;
+			} while (cursor.moveToNext());
+		}
+		if (cursor != null && !cursor.isClosed()) {
+			cursor.close();
+		}
+		return null;
+	}
+	
+	/******************** LES REQUETES DE LA MORT QUI TUE ****************************/
 	// nom du mois actuel et total des depenses
 	public Month getCurrentMonthDetails(){
 		String req = "select sum(amount) as total, case strftime('%m', date('now')) when '01' then 'Janvier' when '02' then 'Fevrier' when '03' then 'Mars' when '04' then 'Avril' when '05' then 'Mai' when '06' then 'Juin' when '07' then 'Juillet' when '08' then 'Aout' when '09' then 'Septembre' when '10' then 'Octobre' when '11' then 'Novembre' when '12' then 'Decembre' else '' end as label "
@@ -152,7 +189,7 @@ public class DatabaseService {
 		Cursor cursor = database.rawQuery(req, null);				
 		if (cursor.moveToFirst()) {
 			do {
-				return new Month(cursor.getString(0), cursor.getString(0));
+				return new Month(cursor.getString(1), cursor.getString(0));
 			} while (cursor.moveToNext());
 		}
 		if (cursor != null && !cursor.isClosed()) {
@@ -202,13 +239,18 @@ public class DatabaseService {
 		Cursor cursor = database.rawQuery(req, null);				
 		if (cursor.moveToFirst()) {
 			do {
-				// creer Fee
+				Fee fee = new Fee();
+				fee.setId(cursor.getString(0));
+				fee.setDate(cursor.getString(1));
+				fee.setAmount(cursor.getString(2));
+				fee.setLabel(cursor.getString(3));	
 				if(res.containsKey(cursor.getString(4))){
-					 // add
+					 res.get(cursor.getString(4)).add(fee);
 				}else{
-					// creer list + add
+					List<Fee> list = new ArrayList<Fee>();
+					list.add(fee);
+					res.put(cursor.getString(4), list);
 				}
-				
 			} while (cursor.moveToNext());
 		}
 		if (cursor != null && !cursor.isClosed()) {
@@ -218,28 +260,74 @@ public class DatabaseService {
 		return res;
 	}
 	
-	/*public Map<String, Double> graphPrcCat(String dateFrom){
-		String req = "select c.label, sum(f.amount) from fee f, category c ";
-		req+= "where f.dateinsr>=date('"+dateFrom+"') and f.idcategory=c.id ";
-		req+= "group by c.label ";
-		req+= "order by c.label asc";
-		Cursor cursor = database.rawQuery(req, null);
-
-		Map<String, Double> map = new HashMap<String, Double>();
+	// liste des mois: libellé + total
+	public List<Month> getMonthsDetails(){
+		List<Month> res = new ArrayList<Month>();
+		String req = "select sum(amount) as total,  case strftime('%m', date) when '01' then 'Janvier' when '02' then 'Fevrier' when '03' "
+						+ "then 'Mars' when '04' then 'Avril' when '05' then 'Mai' when '06' then 'Juin' when '07' then 'Juillet' when '08' "
+						+ "then 'Aout' when '09' then 'Septembre' when '10' then 'Octobre' when '11' then 'Novembre' when '12' then 'Decembre' else '' end "
+						+ "as label "
+						+ "from fee "
+						+ "where strftime('%Y', date) =  strftime('%Y', date('now')) "
+						+ "group by strftime('%m-%Y', date) "
+						+ "order by strftime('%m-%Y', date) desc;";
+						
+		Cursor cursor = database.rawQuery(req, null);				
 		if (cursor.moveToFirst()) {
 			do {
-				map.put(cursor.getString(0),cursor.getDouble(1));
+				Month month = new Month();
+				month.setTotal(cursor.getString(0));
+				month.setLabel(cursor.getString(1));
+				res.add(month);
 			} while (cursor.moveToNext());
 		}
 		if (cursor != null && !cursor.isClosed()) {
 			cursor.close();
 		}
 		
-		return map;
-	}*/
-	 
-
-	 private static class OpenHelper extends SQLiteOpenHelper {
+		return res;
+	}
+	
+	// liste des depenses pour l'année actuelle par mois
+	public Map<String, List<Fee>> getFeesByMonths(){
+		Map<String, List<Fee>> res = new HashMap<String, List<Fee>>();
+		String req="select f.id, f.date, f.amount, f.label, c.color, c.label, case strftime('%m', date) "
+					+ "when '01' then 'Janvier' when '02' then 'Fevrier' when '03' then 'Mars' "
+					+ "when '04' then 'Avril' when '05' then 'Mai' when '06' then 'Juin' "
+					+ "when '07' then 'Juillet' when '08' then 'Aout' when '09' then 'Septembre' "
+					+ "when '10' then 'Octobre' when '11' then 'Novembre' when '12' then 'Decembre' else '' end as label "
+					+ "from fee f, category c "
+					+ "where c.id = f.categoryid "
+					+ "and strftime('%Y', f.date) =  strftime('%Y', date('now')) "
+					+ "order by f.date desc;";
+		
+		Cursor cursor = database.rawQuery(req, null);				
+		if (cursor.moveToFirst()) {
+			do {
+				Fee fee = new Fee();
+				fee.setId(cursor.getString(0));
+				fee.setDate(cursor.getString(1));
+				fee.setAmount(cursor.getString(2));
+				fee.setLabel(cursor.getString(3));
+				fee.setColor(cursor.getString(4));	
+				fee.setCategory(cursor.getString(5));
+				if(res.containsKey(cursor.getString(6))){
+					 res.get(cursor.getString(6)).add(fee);
+				}else{
+					List<Fee> list = new ArrayList<Fee>();
+					list.add(fee);
+					res.put(cursor.getString(6), list);
+				}
+			} while (cursor.moveToNext());
+		}
+		if (cursor != null && !cursor.isClosed()) {
+			cursor.close();
+		}
+		
+		return res;
+	}
+	
+	private static class OpenHelper extends SQLiteOpenHelper {
 		OpenHelper(Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		}

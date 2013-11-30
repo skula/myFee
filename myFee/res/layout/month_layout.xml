@@ -8,8 +8,8 @@
 		android:id="@+id/month_label"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:layout_gravity="center"
 		android:textColor="#6a6a6a"
+		android:layout_gravity="center_horizontal"
 		android:textSize="24px"
 		android:textStyle="bold" 
 		android:text="Novembre"/>
@@ -18,8 +18,8 @@
 		android:id="@+id/month_total"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:layout_gravity="center"
 		android:textColor="#6a6a6a"
+		android:layout_gravity="center_horizontal"
 		android:textSize="34px" 
 		android:text="300€"/>
 		
@@ -27,7 +27,6 @@
         android:id="@+id/month_list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:background="#3c3c3c"
         android:groupIndicator="@null" />
 </LinearLayout>

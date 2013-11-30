@@ -11,21 +11,25 @@ import android.widget.ExpandableListView.OnGroupExpandListener;
 
 import com.skula.activities.myfee.R;
 import com.skula.myfee.activities.adapters.HistoryListAdapter;
+import com.skula.myfee.services.DatabaseService;
 
 
 public class HistoryActivity extends Activity {
 
-	HistoryListAdapter listAdapter;
-	ExpandableListView expListView;
+	private HistoryListAdapter listAdapter;
+	private ExpandableListView expListView;
+	private DatabaseService dbs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.histo_layout);
 		
-		//listAdapter = new HistoryListAdapter(this, AntCnst.MENU_HEADERS, AntCnst.MENU_ITEMS);
+		dbs = new DatabaseService(this);
+		
+		listAdapter = new HistoryListAdapter(this, dbs.getMonthsDetails(), dbs.getFeesByMonths());
 		expListView = (ExpandableListView) findViewById(R.id.histo_list);
-		//expListView.setAdapter(listAdapter);
+		expListView.setAdapter(listAdapter);
 		
 		expListView.setOnGroupClickListener(new OnGroupClickListener() {
 

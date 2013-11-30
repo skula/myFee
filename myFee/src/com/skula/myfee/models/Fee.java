@@ -6,6 +6,7 @@ public class Fee {
 	private String amount;
 	private String category;
 	private String date;
+	private String color;
 
 	public Fee() {
 	}
@@ -55,5 +56,13 @@ public class Fee {
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+	
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
 	}
 }
