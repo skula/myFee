@@ -1,32 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
+    android:background="#ffffff"
     android:orientation="vertical" >
 
 	<TextView
 		android:id="@+id/month_label"
-		android:layout_width="fill_parent"
+		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:textColor="#6a6a6a"
-		android:layout_gravity="center_horizontal"
-		android:textSize="24px"
+		android:textColor="#3c3c3c"
+		android:layout_gravity="center"
+		android:layout_marginTop="80px"
+		android:textSize="34px"
 		android:textStyle="bold" 
 		android:text="Novembre"/>
 
 	<TextView
 		android:id="@+id/month_total"
-		android:layout_width="fill_parent"
+		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:textColor="#6a6a6a"
 		android:layout_gravity="center_horizontal"
-		android:textSize="34px" 
+		android:layout_marginBottom="30px"
+		android:textColor="#3c3c3c"
+		android:textSize="80px" 
 		android:text="300€"/>
 		
 	<ExpandableListView
         android:id="@+id/month_list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#3c3c3c"
+        
+        android:paddingLeft="80px"
+        android:paddingRight="80px"
         android:groupIndicator="@null" />
 </LinearLayout>

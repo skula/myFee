@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.skula.activities.myfee.R;
@@ -51,10 +53,11 @@ public class MonthListAdapter extends BaseExpandableListAdapter {
         TextView date = (TextView) convertView.findViewById(R.id.month_list_item_date);
         date.setText(fee.getDate());
 		TextView amount = (TextView) convertView.findViewById(R.id.month_list_item_amount);
-        amount.setText(fee.getAmount());
+        amount.setText(fee.getAmount().replace(".", ",") + " €" );
 		TextView label = (TextView) convertView.findViewById(R.id.month_list_item_label);
         label.setText(fee.getLabel());
-		
+        
+   	
         return convertView;
     }
  
@@ -89,14 +92,20 @@ public class MonthListAdapter extends BaseExpandableListAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.month_list_header_layout, null);
         }
- 
+        
+        int col = Color.parseColor(cat.getColor());
         TextView label = (TextView) convertView.findViewById(R.id.month_list_header_label);
         label.setText(cat.getLabel());
+        label.setTextColor(col);
+        
 		TextView total = (TextView) convertView.findViewById(R.id.month_list_header_total);
-        total.setText(cat.getTotal());
-		TextView perc = (TextView) convertView.findViewById(R.id.month_list_header_percent);
-        perc.setText(cat.getPercent());
- 
+        total.setText(cat.getTotal().replace(".", ",") + " €" );
+        total.setTextColor(col);
+        
+        ProgressBar pb = (ProgressBar) convertView.findViewById(R.id.month_list_header_bar);
+        Double d = Double.valueOf(cat.getPercent())*100;
+        double a = d;
+        pb.setProgress((int)a);
         return convertView;
     }
  

@@ -41,17 +41,17 @@ public class DatabaseService {
 		database.execSQL("create table " + TABLE_NAME_FEE + "(id integer primary key, date DATE, amount NUMERIC, label TEXT, categoryid NUMERIC)");
 		
 		// TODO: inserts...
-		insertCategory(new Category(null,"Restaurant","#ffffff","100"));
-		insertCategory(new Category(null,"Courses","#3c3c3c","200"));
+		insertCategory(new Category(null,"Restaurant","#808080","100"));
+		insertCategory(new Category(null,"Courses","#ffff79","200"));
 		insertCategory(new Category(null,"Sorties","#21e5b3","50"));
-		insertFee(new Fee(null, "Kebab", "15.25","Restaurant", "2013-11-28"));
+		insertFee(new Fee(null, "Kebab", "15.50","Restaurant", "2013-12-28"));
 		insertFee(new Fee(null, "Subway", "25.25","Restaurant", "2013-11-27"));
-		insertFee(new Fee(null, "McDo", "9.25","Restaurant", "2013-11-26"));
-		insertFee(new Fee(null, "Simply", "15.25","Courses", "2013-11-25"));
-		insertFee(new Fee(null, "Paris Store", "7.25","Courses", "2013-11-24"));
-		insertFee(new Fee(null, "Kebab", "20.25","Courses", "2013-11-23"));
-		insertFee(new Fee(null, "Brice", "15.25","Courses", "2013-11-22"));
-		insertFee(new Fee(null, "Fnac", "3.25","Courses", "2013-11-21"));
+		insertFee(new Fee(null, "McDo", "9.25","Restaurant", "2013-12-26"));
+		insertFee(new Fee(null, "Simply", "15.25","Courses", "2013-12-25"));
+		insertFee(new Fee(null, "Paris Store", "7.25","Courses", "2013-12-24"));
+		insertFee(new Fee(null, "Kebab", "20.25","Courses", "2013-12-23"));
+		insertFee(new Fee(null, "Brice", "15.25","Courses", "2013-12-22"));
+		insertFee(new Fee(null, "Fnac", "3.25","Courses", "2013-12-21"));
 	}
 
 	public void insertFee(Fee fee) {
@@ -201,7 +201,7 @@ public class DatabaseService {
 	// liste des categories, leurs totaux et leurs pourcentages
 	public List<Category> getCategoriesDetails(){
 		List<Category> res = new ArrayList<Category>();
-		String req = "select c.label, sum(f.amount) as total, sum(f.amount)/tmp.totmonth as percent "
+		String req = "select c.label, sum(f.amount) as total, sum(f.amount)/tmp.totmonth as percent, c.color "
 					+ "from fee f, category c, (select sum(amount) as totmonth "
 					+ "from fee "
 					+ "where strftime('%m%Y', date) =  strftime('%m%Y', date('now'))) as tmp "
@@ -217,6 +217,7 @@ public class DatabaseService {
 				cat.setLabel(cursor.getString(0));
 				cat.setTotal(cursor.getString(1));
 				cat.setPercent(cursor.getString(2));
+				cat.setColor(cursor.getString(3));
 				res.add(cat);
 			} while (cursor.moveToNext());
 		}

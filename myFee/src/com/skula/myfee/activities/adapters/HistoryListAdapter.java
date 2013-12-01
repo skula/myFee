@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,12 +53,14 @@ public class HistoryListAdapter extends BaseExpandableListAdapter {
  
         TextView date = (TextView) convertView.findViewById(R.id.histo_list_item_date);
         date.setText(fee.getDate());
-		TextView amount = (TextView) convertView.findViewById(R.id.histo_list_item_amount);
-        amount.setText(fee.getAmount());
+        TextView amount = (TextView) convertView.findViewById(R.id.histo_list_item_amount);
+        amount.setText(fee.getAmount().replace(".", ",")+" €");
 		TextView label = (TextView) convertView.findViewById(R.id.histo_list_item_label);
         label.setText(fee.getLabel());
 		TextView cat = (TextView) convertView.findViewById(R.id.histo_list_item_category);
-        cat.setText(fee.getCategory());
+        cat.setText(fee.getCategory().substring(0,1));
+        int col = Color.parseColor(fee.getColor());
+        cat.setBackgroundColor(col);
 		
         return convertView;
     }
@@ -96,7 +99,7 @@ public class HistoryListAdapter extends BaseExpandableListAdapter {
         TextView label = (TextView) convertView.findViewById(R.id.histo_list_header_label);
         label.setText(month.getLabel());
 		TextView total = (TextView) convertView.findViewById(R.id.histo_list_header_total);
-        total.setText(month.getTotal());
+        total.setText(month.getTotal().replace(".", ",")+" €");
  
         return convertView;
     }

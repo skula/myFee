@@ -26,6 +26,7 @@ public class HistoryActivity extends Activity {
 		setContentView(R.layout.histo_layout);
 		
 		dbs = new DatabaseService(this);
+		dbs.bouchon();
 		
 		listAdapter = new HistoryListAdapter(this, dbs.getMonthsDetails(), dbs.getFeesByMonths());
 		expListView = (ExpandableListView) findViewById(R.id.histo_list);
