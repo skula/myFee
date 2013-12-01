@@ -1,7 +1,11 @@
 package com.skula.myfee.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
@@ -70,5 +74,29 @@ public class HistoryActivity extends Activity {
 				return false;
 			}
 		});
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.history, menu);
+	    return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intent;
+	    switch (item.getItemId()) {
+	        case R.id.month:
+	        	intent = new Intent(this, MonthActivity.class);
+	            startActivity(intent);
+	            return true;
+	        case R.id.budget:
+	            return true;
+	        case R.id.parameters:
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
 	}
 }

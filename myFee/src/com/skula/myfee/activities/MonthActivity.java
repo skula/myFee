@@ -1,7 +1,11 @@
 package com.skula.myfee.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
@@ -33,5 +37,33 @@ public class MonthActivity extends Activity {
 		lab.setText(mon.getLabel());
 		TextView tot = (TextView) findViewById(R.id.month_total);
 		tot.setText(mon.getTotal().replace(".", ",")+ " €");
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.month, menu);
+	    return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intent;
+	    switch (item.getItemId()) {
+	        case R.id.add_fee:
+	        	intent = new Intent(this, FeeActivity.class);
+	            startActivity(intent);
+	            return true;
+	        case R.id.history:
+	        	intent = new Intent(this, HistoryActivity.class);
+	            startActivity(intent);
+	            return true;
+	        case R.id.budget:
+	            return true;
+	        case R.id.parameters:
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
 	}
 }
