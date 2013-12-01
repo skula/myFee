@@ -3,114 +3,132 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-	
-	<LinearLayout
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:orientation="horizontal" >
-		<Button
-			android:id="@+id/fee_btnCancel"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:text="Annuler"/>
-		<Button
-			android:id="@+id/fee_btnAdd"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:text="Ajouter"/>
-	</LinearLayout>
-	
-	<TextView
-		android:id="@+id/fee_amount"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:paddingTop="15px"
-		android:paddingBottom="15px"
-		android:paddingLeft="20px"
-		android:textSize="20dip"
-		android:layout_gravity="right"
-		android:background="#3c3c3c"
-		android:textColor="#ffffff" 
-		android:text="400€"/>
-		
-	<TextView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:paddingTop="15px"
-		android:paddingBottom="15px"
-		android:paddingLeft="20px"
-		android:textSize="20dip"
-		android:background="#3c3c3c"
-		android:textColor="#ffffff" 
-		android:text="CATEGORIE"/>
-	
-	<ListView
-        android:id="@+id/fee_categories"
+
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
-	
-	<TextView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:paddingTop="15px"
-		android:paddingBottom="15px"
-		android:paddingLeft="20px"
-		android:textSize="20dip"
-		android:background="#3c3c3c"
-		android:textColor="#ffffff" 
-		android:text="INFOS ADDITIONNELLES"/>
-		
-	<LinearLayout
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:orientation="horizontal" >
-		<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:paddingTop="15px"
-			android:paddingBottom="15px"
-			android:paddingLeft="20px"
-			android:textSize="20dip"
-			android:background="#3c3c3c"
-			android:textColor="#ffffff" 
-			android:text="Date"/>
-		<EditText
-			android:id="@+id/fee_date"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:paddingTop="15px"
-			android:paddingBottom="15px"
-			android:paddingLeft="20px"
-			android:textSize="20dip"
-			android:background="#3c3c3c"
-			android:textColor="#ffffff"/>
-	</LinearLayout>
-	
-	<LinearLayout
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:orientation="horizontal" >
-		<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:paddingTop="15px"
-			android:paddingBottom="15px"
-			android:paddingLeft="20px"
-			android:textSize="20dip"
-			android:background="#3c3c3c"
-			android:textColor="#ffffff" 
-			android:text="Note"/>
-		<EditText
-			android:id="@+id/fee_label"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:paddingTop="15px"
-			android:paddingBottom="15px"
-			android:paddingLeft="20px"
-			android:textSize="20dip"
-			android:background="#3c3c3c"
-			android:textColor="#ffffff"/>
-	</LinearLayout>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/fee_btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Annuler" />
+
+        <Button
+            android:id="@+id/fee_btnAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Ajouter" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="20px"
+        android:paddingRight="20px" >
+
+        <TextView
+            android:id="@+id/fee_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:gravity="center_vertical"
+            android:paddingLeft="20px"
+            android:paddingTop="15px"
+            android:text="400€"
+            android:textColor="#3c3c3c"
+            android:textSize="35dip" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5px"
+            android:paddingLeft="20px"
+            android:paddingTop="15px"
+            android:text="CATEGORIE"
+            android:textColor="#3c3c3c"
+            android:textSize="15dip" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="3px"
+            android:background="#c0c0c0" />
+
+        <ListView
+            android:id="@+id/fee_categories"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5px"
+            android:paddingLeft="20px"
+            android:paddingTop="15px"
+            android:text="INFOS ADDITIONNELLES"
+            android:textColor="#3c3c3c"
+            android:textSize="15dip" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="3px"
+            android:background="#c0c0c0" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="15px"
+                android:paddingLeft="20px"
+                android:paddingTop="15px"
+                android:text="Date"
+                android:textColor="#3c3c3c"
+                android:textSize="16dip" />
+
+            <EditText
+                android:id="@+id/fee_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="15px"
+                android:paddingLeft="20px"
+                android:paddingTop="15px"
+                android:textColor="#3c3c3c"
+                android:textSize="20dip" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="15px"
+                android:paddingLeft="20px"
+                android:paddingTop="15px"
+                android:text="Note"
+                android:textColor="#3c3c3c"
+                android:textSize="16dip" />
+
+            <EditText
+                android:id="@+id/fee_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="15px"
+                android:paddingLeft="20px"
+                android:paddingTop="15px"
+                android:textColor="#3c3c3c"
+                android:textSize="20dip" />
+        </LinearLayout>
+    </LinearLayout>
+
 </LinearLayout>
