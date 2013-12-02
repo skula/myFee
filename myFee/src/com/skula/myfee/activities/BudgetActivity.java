@@ -6,38 +6,30 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ExpandableListView;
-import android.widget.TextView;
+import android.widget.ListView;
 
 import com.skula.activities.myfee.R;
-import com.skula.myfee.activities.adapters.MonthListAdapter;
+import com.skula.myfee.activities.adapters.BudgetAdapter;
 import com.skula.myfee.activities.dialogs.AmountDialog;
-import com.skula.myfee.models.Month;
+import com.skula.myfee.models.Budget;
 import com.skula.myfee.services.DatabaseService;
 
 
-public class MonthActivity extends Activity {
-
-	private MonthListAdapter listAdapter;
-	private ExpandableListView expListView;
+public class BudgetActivity extends Activity {
+	private ListView listView;
+	private BudgetAdapter bAdapter;
 	private DatabaseService dbs;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.month_layout);
-		
+		setContentView(R.layout.budget_layout);
 		dbs = new DatabaseService(this);
-		//dbs.bouchon();
-		listAdapter = new MonthListAdapter(this, dbs.getCategoriesDetails(), dbs.getFeesByCategories());
-		expListView = (ExpandableListView) findViewById(R.id.month_list);
-		expListView.setAdapter(listAdapter);	
 		
-		Month mon = dbs.getCurrentMonthDetails();
-		TextView lab = (TextView) findViewById(R.id.month_label);
-		lab.setText(mon.getLabel());
-		TextView tot = (TextView) findViewById(R.id.month_total);
-		tot.setText(mon.getTotal().replace(".", ",")+ " €");
+		listView = (ListView) findViewById(R.id.budget_list);
+		Budget array[] = dbs.getBudgetDetails();
+		bAdapter = new BudgetAdapter(this, R.layout.budget_item_layout, array);
+		listView.setAdapter(bAdapter);
 	}
 	
 	@Override
@@ -60,12 +52,8 @@ public class MonthActivity extends Activity {
 	            startActivity(intent);
 	            return true;
 	        case R.id.budget:
-	        	intent = new Intent(this, BudgetActivity.class);
-	            startActivity(intent);
 	            return true;
-	        case R.id.categories:
-	        	intent = new Intent(this, CategoryListActivity.class);
-	            startActivity(intent);
+	        case R.id.parameters:
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);

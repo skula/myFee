@@ -35,15 +35,15 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
 			row = inflater.inflate(R.layout.category_item_layout, parent, false);
 		}
 		
-		TextView color = (TextView) row.findViewById(R.id.category_color);
+		TextView color = (TextView) row.findViewById(R.id.category_item_color);
 		color.setText(itemList.get(position).getLabel().substring(0,1));
 		
 		color.setBackgroundColor(Color.parseColor(itemList.get(position).getColor()));
 		
-		TextView label = (TextView) row.findViewById(R.id.category_label);
+		TextView label = (TextView) row.findViewById(R.id.category_item_label);
 		label.setText(itemList.get(position).getLabel());
 		
-		CheckedTextView checkBox = (CheckedTextView) row.findViewById(R.id.category_state);
+		CheckedTextView checkBox = (CheckedTextView) row.findViewById(R.id.category_item_state);
 		checkBox.setChecked(true);//list.getCheckedItemPosition() == position);
 		return (row);
 	}

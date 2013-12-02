@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 
+import com.skula.myfee.models.Budget;
 import com.skula.myfee.models.Category;
 import com.skula.myfee.models.Fee;
 import com.skula.myfee.models.Month;
@@ -42,7 +43,7 @@ public class DatabaseService {
 		
 		// TODO: inserts...
 		insertCategory(new Category(null,"Restaurant","#808080","100"));
-		insertCategory(new Category(null,"Courses","#ffff79","200"));
+		insertCategory(new Category(null,"Courses","#ff8040","200"));
 		insertCategory(new Category(null,"Sorties","#21e5b3","50"));
 		insertFee(new Fee(null, "Kebab", "15.50","Restaurant", "2013-12-28"));
 		insertFee(new Fee(null, "Subway", "25.25","Restaurant", "2013-11-27"));
@@ -160,6 +161,25 @@ public class DatabaseService {
 			cursor.close();
 		}
 		return res;
+	}
+	
+	public Category[] getSimpleCategories(){
+		List<Category> res = new ArrayList<Category>();
+		Cursor cursor = database.query(TABLE_NAME_CATEGORY, new String[] { "id, label, color, budget" }, null, null, null, null, null);
+		if (cursor.moveToFirst()) {
+			do {
+				Category cat = new Category();
+				cat.setId(cursor.getString(0));
+				cat.setLabel(cursor.getString(1));
+				cat.setColor(cursor.getString(2));
+				cat.setBudget(cursor.getString(3));
+				res.add(cat);
+			} while (cursor.moveToNext());
+		}
+		if (cursor != null && !cursor.isClosed()) {
+			cursor.close();
+		}
+		return res.toArray(new Category[res.size()]);
 	}
 	
 	public Category getCategory(String id){
@@ -326,6 +346,36 @@ public class DatabaseService {
 		}
 		
 		return res;
+	}
+	
+	// liste des budget par catégories pour le mois
+	public Budget[] getBudgetDetails(){
+		List<Budget> res = new ArrayList<Budget>();
+		String req="select c.label, c.color, c.budget as goal, sum(f.amount) as total, sum(f.amount)/c.budget*100 as percent, c.budget- sum(f.amount) as diff "
+					+ "from fee f, category c "
+					+ "where c.id = f.categoryid "
+					+ "and strftime('%m%Y', f.date) =  strftime('%m%Y', date('now')) "
+					+ "group by c.id "
+					+ "order by total desc;";
+		
+		Cursor cursor = database.rawQuery(req, null);				
+		if (cursor.moveToFirst()) {
+			do {
+				Budget b = new Budget();
+				b.setCategory(cursor.getString(0));
+				b.setColor(cursor.getString(1));
+				b.setGoal(cursor.getString(2));
+				b.setTotal(cursor.getString(3));
+				b.setPercent(cursor.getString(4));
+				b.setDifference(cursor.getString(5));
+				res.add(b);
+			} while (cursor.moveToNext());
+		}
+		if (cursor != null && !cursor.isClosed()) {
+			cursor.close();
+		}
+		
+		return res.toArray(new Budget[res.size()]);
 	}
 	
 	private static class OpenHelper extends SQLiteOpenHelper {

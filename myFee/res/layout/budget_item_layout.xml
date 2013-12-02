@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingTop="30px"
+    android:paddingLeft="20px"
+    android:paddingRight="20px"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" 
+        android:paddingLeft="10px"
+        android:paddingRight="10px">
+
+        <TextView
+            android:id="@+id/budget_item_catlab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:textSize="20dip"/>
+
+        <TextView
+            android:id="@+id/budget_item_total_lab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:layout_marginLeft="10px"
+            android:textSize="16dip"/>
+
+        <TextView
+            android:id="@+id/budget_item_goal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:textSize="16dip"/>
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/budget_item_percent"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:max="100" />
+
+</LinearLayout>

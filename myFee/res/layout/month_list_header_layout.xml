@@ -15,6 +15,7 @@
 			android:paddingTop="15px"
 			android:paddingBottom="15px"
 			android:paddingLeft="20px"
+			android:layout_weight="1"
 			android:textSize="20dip"
 			android:textColor="#ffffff" />
 			
@@ -23,7 +24,10 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:paddingTop="15px"
+			android:layout_weight="1"
 			android:paddingBottom="15px"
+			android:paddingRight="20px"
+			android:gravity="right"
 			android:paddingLeft="20px"
 			android:textSize="20dip"
 			android:textColor="#ffffff" />
