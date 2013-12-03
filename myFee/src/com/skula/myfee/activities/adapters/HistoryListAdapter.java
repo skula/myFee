@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.skula.activities.myfee.R;
 import com.skula.myfee.models.Fee;
 import com.skula.myfee.models.Month;
+import com.skula.myfee.utils.DateUtil;
  
 public class HistoryListAdapter extends BaseExpandableListAdapter {
  
@@ -54,7 +55,7 @@ public class HistoryListAdapter extends BaseExpandableListAdapter {
 		TextView id = (TextView) convertView.findViewById(R.id.histo_list_item_id);
         id.setText(fee.getId());
         TextView date = (TextView) convertView.findViewById(R.id.histo_list_item_date);
-        date.setText(fee.getDate());
+        date.setText(DateUtil.getDateFormat(fee.getDate()));
         TextView amount = (TextView) convertView.findViewById(R.id.histo_list_item_amount);
         amount.setText(fee.getAmount().replace(".", ",")+" €");
 		TextView label = (TextView) convertView.findViewById(R.id.histo_list_item_label);
