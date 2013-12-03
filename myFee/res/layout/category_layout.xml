@@ -56,7 +56,7 @@
             android:textSize="35dip"
 			android:text="Libelle"/>
 
-        <TextView
+        <EditText
             android:id="@+id/category_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
             android:textSize="35dip"
 			android:text="Budget"/>
 
-        <TextView
+        <EditText
             android:id="@+id/category_budget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

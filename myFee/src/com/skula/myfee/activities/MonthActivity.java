@@ -1,17 +1,24 @@
 package com.skula.myfee.activities;
 
+import java.util.List;
+import java.util.Map;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.TextView;
 
 import com.skula.activities.myfee.R;
 import com.skula.myfee.activities.adapters.MonthListAdapter;
 import com.skula.myfee.activities.dialogs.AmountDialog;
+import com.skula.myfee.models.Category;
+import com.skula.myfee.models.Fee;
 import com.skula.myfee.models.Month;
 import com.skula.myfee.services.DatabaseService;
 
@@ -21,6 +28,8 @@ public class MonthActivity extends Activity {
 	private MonthListAdapter listAdapter;
 	private ExpandableListView expListView;
 	private DatabaseService dbs;
+	private List<Category> headers;
+	private Map<String, List<Fee>> childs;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +38,10 @@ public class MonthActivity extends Activity {
 		
 		dbs = new DatabaseService(this);
 		//dbs.bouchon();
-		listAdapter = new MonthListAdapter(this, dbs.getCategoriesDetails(), dbs.getFeesByCategories());
+		headers = dbs.getCategoriesDetails();
+		childs = dbs.getFeesByCategories();
+		
+		listAdapter = new MonthListAdapter(this, headers, childs);
 		expListView = (ExpandableListView) findViewById(R.id.month_list);
 		expListView.setAdapter(listAdapter);	
 		
@@ -38,6 +50,20 @@ public class MonthActivity extends Activity {
 		lab.setText(mon.getLabel());
 		TextView tot = (TextView) findViewById(R.id.month_total);
 		tot.setText(mon.getTotal().replace(".", ",")+ " €");
+
+		expListView.setOnChildClickListener(new OnChildClickListener() {
+			@Override
+			public boolean onChildClick(ExpandableListView parent, View v,
+					int groupPosition, int childPosition, long id) {
+				Fee f = childs.get(headers.get(groupPosition).getLabel()).get(childPosition);					
+				Intent intent = new Intent(v.getContext(), FeeActivity.class);
+				Bundle mBundle = new Bundle();
+				mBundle.putString("feeId", f.getId());
+				intent.putExtras(mBundle);
+				startActivity(intent);
+				return false;
+			}
+		});
 	}
 	
 	@Override

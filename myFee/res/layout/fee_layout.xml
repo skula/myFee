@@ -16,6 +16,20 @@
             android:layout_weight="1"
             android:text="Annuler" />
 
+		<Button
+            android:id="@+id/fee_btnMod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Modifier" />
+			
+		<Button
+            android:id="@+id/fee_btnDel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Supprimer" />
+			
         <Button
             android:id="@+id/fee_btnAdd"
             android:layout_width="wrap_content"
@@ -93,7 +107,7 @@
                 android:textColor="#3c3c3c"
                 android:textSize="16dip" />
 
-            <EditText
+            <CalendarText
                 android:id="@+id/fee_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

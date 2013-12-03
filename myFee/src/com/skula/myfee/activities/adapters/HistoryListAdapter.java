@@ -51,6 +51,8 @@ public class HistoryListAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.histo_list_item_layout, null);
         }
  
+		TextView id = (TextView) convertView.findViewById(R.id.histo_list_item_id);
+        id.setText(fee.getId());
         TextView date = (TextView) convertView.findViewById(R.id.histo_list_item_date);
         date.setText(fee.getDate());
         TextView amount = (TextView) convertView.findViewById(R.id.histo_list_item_amount);

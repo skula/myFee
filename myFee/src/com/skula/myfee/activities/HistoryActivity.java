@@ -1,5 +1,8 @@
 package com.skula.myfee.activities;
 
+import java.util.List;
+import java.util.Map;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,12 +12,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.ExpandableListView.OnGroupClickListener;
-import android.widget.ExpandableListView.OnGroupCollapseListener;
-import android.widget.ExpandableListView.OnGroupExpandListener;
 
 import com.skula.activities.myfee.R;
 import com.skula.myfee.activities.adapters.HistoryListAdapter;
+import com.skula.myfee.models.Fee;
+import com.skula.myfee.models.Month;
 import com.skula.myfee.services.DatabaseService;
 
 
@@ -23,54 +25,33 @@ public class HistoryActivity extends Activity {
 	private HistoryListAdapter listAdapter;
 	private ExpandableListView expListView;
 	private DatabaseService dbs;
-
+	private List<Month> headers;
+	private Map<String, List<Fee>> childs;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.histo_layout);
 		
 		dbs = new DatabaseService(this);
-		dbs.bouchon();
+		//dbs.bouchon();
+		headers = dbs.getMonthsDetails();
+		childs = dbs.getFeesByMonths();
 		
-		listAdapter = new HistoryListAdapter(this, dbs.getMonthsDetails(), dbs.getFeesByMonths());
+		listAdapter = new HistoryListAdapter(this, headers, childs);
 		expListView = (ExpandableListView) findViewById(R.id.histo_list);
 		expListView.setAdapter(listAdapter);
-		
-		expListView.setOnGroupClickListener(new OnGroupClickListener() {
 
-			@Override
-			public boolean onGroupClick(ExpandableListView parent, View v,
-					int groupPosition, long id) {
-
-				return false;
-			}
-		});
-
-		// Listview Group expanded listener
-		expListView.setOnGroupExpandListener(new OnGroupExpandListener() {
-
-			@Override
-			public void onGroupExpand(int groupPosition) {
-				
-			}
-		});
-
-		// Listview Group collasped listener
-		expListView.setOnGroupCollapseListener(new OnGroupCollapseListener() {
-
-			@Override
-			public void onGroupCollapse(int groupPosition) {
-				
-			}
-		});
-
-		// Listview on child click listener
 		expListView.setOnChildClickListener(new OnChildClickListener() {
-
 			@Override
 			public boolean onChildClick(ExpandableListView parent, View v,
 					int groupPosition, int childPosition, long id) {
-				
+				Fee f = childs.get(headers.get(groupPosition).getLabel()).get(childPosition);					
+				Intent intent = new Intent(v.getContext(), FeeActivity.class);
+				Bundle mBundle = new Bundle();
+				mBundle.putString("feeId", f.getId());
+				intent.putExtras(mBundle);
+				startActivity(intent);
 				return false;
 			}
 		});
@@ -92,8 +73,12 @@ public class HistoryActivity extends Activity {
 	            startActivity(intent);
 	            return true;
 	        case R.id.budget:
+				intent = new Intent(this, BudgetActivity.class);
+	            startActivity(intent);
 	            return true;
-	        case R.id.parameters:
+	        case R.id.categories:
+				intent = new Intent(this, CategoryListActivity.class);
+	            startActivity(intent);
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);

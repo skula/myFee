@@ -8,6 +8,12 @@
     android:paddingLeft="20px"
     android:paddingRight="15px">
 
+	<TextView
+        android:id="@+id/histo_list_item_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+		
     <TextView
         android:id="@+id/histo_list_item_category"
         android:layout_width="70px"
@@ -49,6 +55,6 @@
         android:textColor="#3c3c3c"
        android:layout_gravity="center_vertical"
         android:gravity="right"
-        android:textSize="20dip" />
+        android:textSize="18dip" />
 
 </LinearLayout>

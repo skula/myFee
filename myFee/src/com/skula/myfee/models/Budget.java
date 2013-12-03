@@ -5,20 +5,15 @@ public class Budget {
 	private String color;
 	private String total;
 	private String goal;
-	private String difference;
-	private String percent;
 	
 	public Budget() {
 	}
 
-	public Budget(String category, String color, String total, String goal,
-			String difference, String percent) {
+	public Budget(String category, String color, String total, String goal) {
 		this.category = category;
 		this.color = color;
 		this.total = total;
 		this.goal = goal;
-		this.difference = difference;
-		this.percent = percent;
 	}
 
 	public String getCategory() {
@@ -51,21 +46,5 @@ public class Budget {
 
 	public void setGoal(String goal) {
 		this.goal = goal;
-	}
-
-	public String getDifference() {
-		return difference;
-	}
-
-	public void setDifference(String difference) {
-		this.difference = difference;
-	}
-
-	public String getPercent() {
-		return percent;
-	}
-
-	public void setPercent(String percent) {
-		this.percent = percent;
 	}
 }

@@ -42,7 +42,7 @@ public class DatabaseService {
 		database.execSQL("create table " + TABLE_NAME_FEE + "(id integer primary key, date DATE, amount NUMERIC, label TEXT, categoryid NUMERIC)");
 		
 		// TODO: inserts...
-		insertCategory(new Category(null,"Restaurant","#808080","100"));
+		insertCategory(new Category(null,"Restaurant","#808080","20"));
 		insertCategory(new Category(null,"Courses","#ff8040","200"));
 		insertCategory(new Category(null,"Sorties","#21e5b3","50"));
 		insertFee(new Fee(null, "Kebab", "15.50","Restaurant", "2013-12-28"));
@@ -351,7 +351,7 @@ public class DatabaseService {
 	// liste des budget par catégories pour le mois
 	public Budget[] getBudgetDetails(){
 		List<Budget> res = new ArrayList<Budget>();
-		String req="select c.label, c.color, c.budget as goal, sum(f.amount) as total, sum(f.amount)/c.budget*100 as percent, c.budget- sum(f.amount) as diff "
+		String req="select c.label, c.color, c.budget as goal, sum(f.amount) as total "
 					+ "from fee f, category c "
 					+ "where c.id = f.categoryid "
 					+ "and strftime('%m%Y', f.date) =  strftime('%m%Y', date('now')) "
@@ -366,8 +366,6 @@ public class DatabaseService {
 				b.setColor(cursor.getString(1));
 				b.setGoal(cursor.getString(2));
 				b.setTotal(cursor.getString(3));
-				b.setPercent(cursor.getString(4));
-				b.setDifference(cursor.getString(5));
 				res.add(b);
 			} while (cursor.moveToNext());
 		}

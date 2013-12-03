@@ -35,20 +35,24 @@ public class BudgetAdapter extends ArrayAdapter<Budget> {
 		int col = Color.parseColor(item.getColor());
 		cat.setTextColor(col);
 		
-		TextView total = (TextView) rowView.findViewById(R.id.budget_item_total_lab);
-		total.setText(item.getTotal().replace(".",",") + " €");
-		
-		TextView goal = (TextView) rowView.findViewById(R.id.budget_item_goal);
-		goal.setText(item.getGoal().replace(".",",") + " €");
-		
+		TextView totalLab = (TextView) rowView.findViewById(R.id.budget_item_total);
+		TextView goalLab = (TextView) rowView.findViewById(R.id.budget_item_goal);
 		ProgressBar pb = (ProgressBar) rowView.findViewById(R.id.budget_item_percent);
-        double a = Double.valueOf(item.getPercent());
-		if(a>=100.0){
-			pb.setProgress(100);
-			//set color blue
+		
+		double total = Double.valueOf(item.getTotal());
+		double goal = Double.valueOf(item.getGoal());
+		if(goal>total){
+			totalLab.setText(item.getTotal().replace(".",",") + " €");
+			goalLab.setText(item.getGoal().replace(".",",") + " €");
+			double ratio = (total/goal)*100;
+			pb.setProgress((int)ratio);
 		}else{
-			pb.setProgress((int)a);
-			//set color red
+			String tmp = item.getTotal() + " € (" + item.getGoal() + " €)";
+			totalLab.setText(tmp.replace(".",","));
+			tmp = (goal-total) + "";
+			goalLab.setText(tmp.replace(".",",") + " €");
+			goalLab.setTextColor(Color.RED);
+			pb.setProgress(100);
 		}
 		
 		return rowView;

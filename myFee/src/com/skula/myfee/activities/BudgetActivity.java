@@ -25,7 +25,7 @@ public class BudgetActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.budget_layout);
 		dbs = new DatabaseService(this);
-		
+		dbs.bouchon();
 		listView = (ListView) findViewById(R.id.budget_list);
 		Budget array[] = dbs.getBudgetDetails();
 		bAdapter = new BudgetAdapter(this, R.layout.budget_item_layout, array);
@@ -35,7 +35,7 @@ public class BudgetActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.month, menu);
+	    inflater.inflate(R.menu.budget, menu);
 	    return true;
 	}
 	
@@ -43,17 +43,17 @@ public class BudgetActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent intent;
 	    switch (item.getItemId()) {
-	        case R.id.add_fee:
-				AmountDialog ad = new AmountDialog(this);
-				ad.show();
+	        case R.id.month:
+				intent = new Intent(this, MonthActivity.class);
+	            startActivity(intent);
 	            return true;
 	        case R.id.history:
 	        	intent = new Intent(this, HistoryActivity.class);
 	            startActivity(intent);
 	            return true;
-	        case R.id.budget:
-	            return true;
-	        case R.id.parameters:
+	        case R.id.categories:
+				intent = new Intent(this, CategoryListActivity.class);
+	            startActivity(intent);
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);

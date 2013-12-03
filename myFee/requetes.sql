@@ -17,6 +17,7 @@ insert into fee values(5,'2013-11-24',15.25,'Paris Store',2);
 insert into fee values(6,'2013-11-23',15.25,'Brice',2);
 insert into fee values(7,'2013-11-22',15.25,'Fnac',2);
 
+--*****************************************************
 
 -- VUE D'ENSEMBLE
 	-- total des depenses pour le mois actuel et libellé
@@ -83,3 +84,16 @@ where c.id = f.categoryid
 	and strftime('%m%Y', f.date) =  strftime('%m%Y', date('now'))
 group by c.id
 order by total desc;
+
+
+--*************************************************
+-- GRAPHIQUES
+	-- variation de la somme des dépenses (y) de chaque catégorie 
+	-- sur une durée (x) selon une unité de temps.
+select sum(f.amount) as total, strftime('%W', f.date), c.label
+from fee f, category c
+where strftime('%W', f.date) between '44' and '55' and f.categoryid = c.id
+group by  strftime('%W', f.date),  c.label
+order by strftime('%W', f.date);
+	-- pourcentage de la somme de chaque catégorie pour 
+	-- une durée donnée (camembert ou anneaux)

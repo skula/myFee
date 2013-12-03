@@ -14,7 +14,7 @@
         android:paddingTop="15px"
         android:textColor="#0099cc"
         android:layout_weight="1"
-        android:textSize="30dip" />
+        android:textSize="22dip" />
 
     <TextView
         android:id="@+id/histo_list_header_total"
@@ -26,6 +26,6 @@
         android:gravity="right"
         android:layout_weight="1"
        	android:textColor="#0099cc"
-        android:textSize="30dip" />
+        android:textSize="22dip" />
 
 </LinearLayout>
