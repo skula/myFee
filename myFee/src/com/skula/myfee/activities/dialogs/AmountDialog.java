@@ -126,8 +126,10 @@ public class AmountDialog extends Dialog implements OnClickListener {
 			dismiss();
 			break;
 			case R.id.amount_btn_continue:
-			//Intent intent = new Intent(parentActivity, FeeActivity.class);
-	        //startActivity(intent);
+			dismiss();
+			Intent intent = new Intent(parentActivity, FeeActivity.class);
+			intent.putExtra("feeAmount", formatDouble());
+	        v.getContext().startActivity(intent);
 			break;
 			default:
 			dismiss();

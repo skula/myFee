@@ -107,7 +107,7 @@
                 android:textColor="#3c3c3c"
                 android:textSize="16dip" />
 
-            <CalendarText
+            <EditText
                 android:id="@+id/fee_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

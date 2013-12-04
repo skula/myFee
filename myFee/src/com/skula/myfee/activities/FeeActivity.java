@@ -31,7 +31,7 @@ public class FeeActivity extends Activity {
 	private Button btnMod;
 	private Button btnDel;
 	private EditText label;
-	private CalendarView date;
+	private EditText date;
 	private TextView amount;
 	
 	private String id;
@@ -58,7 +58,7 @@ public class FeeActivity extends Activity {
 		btnDel = (Button) findViewById(R.id.fee_btnDel);
 		
 		label = (EditText) findViewById(R.id.fee_label);
-		date = (CalendarView) findViewById(R.id.fee_date);
+		date = (EditText) findViewById(R.id.fee_date);
 		amount = (TextView) findViewById(R.id.fee_amount);
 		
 		id = getIntent().getExtras().getString("feeId");

@@ -60,7 +60,11 @@ public class MonthActivity extends Activity {
 				Bundle mBundle = new Bundle();
 				mBundle.putString("feeId", f.getId());
 				intent.putExtras(mBundle);
+				try{
 				startActivity(intent);
+				} catch(Exception e){
+					e.getMessage();
+				}
 				return false;
 			}
 		});
