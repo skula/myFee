@@ -2,7 +2,6 @@ package com.skula.myfee.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,9 +10,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Spinner;
 
 import com.skula.activities.myfee.R;
+import com.skula.myfee.activities.adapters.ColorAdapter;
+import com.skula.myfee.constants.Cnst;
 import com.skula.myfee.models.Category;
 import com.skula.myfee.services.DatabaseService;
 
@@ -28,7 +29,7 @@ public class CategoryActivity extends Activity {
 	private Button btnMod;
 	private Button btnDel;
 	private EditText label;
-	private TextView color;
+	private Spinner color;
 	private EditText budget;
 	
 	@Override
@@ -38,8 +39,9 @@ public class CategoryActivity extends Activity {
 		
 		dbs = new DatabaseService(this);
 		
+		color = (Spinner) findViewById(R.id.category_color);
+		color.setAdapter(new ColorAdapter(this, R.id.color_list_item_ref, Cnst.COLORS));
 		label = (EditText)findViewById(R.id.category_label);
-		color = (TextView)findViewById(R.id.category_color);
 		budget = (EditText)findViewById(R.id.category_budget);
 		
 		btnCancel = (Button) findViewById(R.id.category_btnCancel);
@@ -47,7 +49,7 @@ public class CategoryActivity extends Activity {
 		btnMod = (Button) findViewById(R.id.category_btnMod);
 		btnDel = (Button) findViewById(R.id.category_btnDel);
 		
-		id = getIntent().getExtras().getString("caegoryId");
+		id = getIntent().getExtras().getString("categoryId");
 		if(id == null){
 			handleCreateMode();
 		}else{
@@ -94,8 +96,8 @@ public class CategoryActivity extends Activity {
 		Category cat = dbs.getCategory(id);
 		label.setText(cat.getLabel());
 		budget.setText(cat.getBudget());
-		int col = Color.parseColor(cat.getColor());
-		color.setBackgroundColor(col);
+		//int col = Color.parseColor(cat.getColor());
+		//color.setBackgroundColor(col);
 	}
 	
 	@Override
@@ -119,6 +121,10 @@ public class CategoryActivity extends Activity {
 	            return true;
 	         case R.id.budget:
 				intent = new Intent(this, BudgetActivity.class);
+	            startActivity(intent);
+	            return true;
+			case R.id.graphics:
+	        	intent = new Intent(this, GraphicActivity.class);
 	            startActivity(intent);
 	            return true;
 	        case R.id.categories:

@@ -23,6 +23,6 @@ public class DrawerService {
 	}
 
 	public void draw(Canvas c){
-	
+		
 	}
 }

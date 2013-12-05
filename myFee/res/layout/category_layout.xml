@@ -13,14 +13,14 @@
             android:id="@+id/category_btnCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+             android:layout_weight="1"
             android:text="Annuler" />
 			
 		<Button
             android:id="@+id/category_btnMod"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+             android:layout_weight="1"
             android:text="Modifier" />
 			
         <Button
@@ -39,88 +39,67 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="80px"
         android:orientation="horizontal"
         android:paddingLeft="20px"
         android:paddingRight="20px" >
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="200px"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:gravity="center_vertical"
-            android:paddingLeft="20px"
-            android:paddingTop="15px"
             android:textColor="#3c3c3c"
-            android:textSize="35dip"
+            android:textSize="18dip"
 			android:text="Libelle"/>
 
         <EditText
             android:id="@+id/category_label"
-            android:layout_width="wrap_content"
+            android:layout_width="600px"
             android:layout_height="wrap_content"
-            android:paddingBottom="5px"
-            android:paddingLeft="20px"
-            android:paddingTop="15px"
             android:textColor="#3c3c3c"
-            android:textSize="15dip" />
+            android:textSize="18dip" />
 	</LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="80px"
         android:orientation="horizontal"
         android:paddingLeft="20px"
         android:paddingRight="20px" >
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="200px"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:gravity="center_vertical"
-            android:paddingLeft="20px"
-            android:paddingTop="15px"
             android:textColor="#3c3c3c"
-            android:textSize="35dip"
+            android:textSize="18dip"
 			android:text="Couleur"/>
 
-        <TextView
+        <Spinner
             android:id="@+id/category_color"
-            android:layout_width="wrap_content"
+            android:layout_width="600px"
             android:layout_height="wrap_content"
-            android:paddingBottom="5px"
-            android:paddingLeft="20px"
-            android:paddingTop="15px"
             android:textColor="#3c3c3c"
             android:textSize="15dip" />
 	</LinearLayout>
 	
 	<LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="80px"
         android:orientation="horizontal"
         android:paddingLeft="20px"
         android:paddingRight="20px" >
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="200px"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:gravity="center_vertical"
-            android:paddingLeft="20px"
-            android:paddingTop="15px"
             android:textColor="#3c3c3c"
-            android:textSize="35dip"
+            android:textSize="18dip"
 			android:text="Budget"/>
 
         <EditText
             android:id="@+id/category_budget"
-            android:layout_width="wrap_content"
+            android:layout_width="600px"
             android:layout_height="wrap_content"
-            android:paddingBottom="5px"
-            android:paddingLeft="20px"
-            android:paddingTop="15px"
             android:textColor="#3c3c3c"
             android:textSize="15dip" />
 	</LinearLayout>

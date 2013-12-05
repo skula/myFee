@@ -85,22 +85,26 @@ public class FeeActivity extends Activity {
 		btnAdd.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Fee fee = new Fee();
-				fee.setLabel(label.getText().toString());
-				fee.setDate(date.getText().toString());
-				fee.setAmount(amount.getText().toString());
-				dbs.insertFee(fee);
+				if(!tmpAmount.isEmpty()){
+					Fee fee = new Fee();
+					fee.setLabel(label.getText().toString());
+					fee.setDate(date.getText().toString());
+					fee.setAmount(amount.getText().toString());
+					dbs.insertFee(fee);
+				}
 			}
 		});	
 		
 		btnMod.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Fee fee = new Fee();
-				fee.setLabel(label.getText().toString());
-				fee.setDate(date.getText().toString());
-				fee.setAmount(tmpAmount);
-				dbs.updateFee(id, fee);
+				if(!tmpAmount.isEmpty()){
+					Fee fee = new Fee();
+					fee.setLabel(label.getText().toString());
+					fee.setDate(date.getText().toString());
+					fee.setAmount(tmpAmount);
+					dbs.updateFee(id, fee);
+				}
 			}
 		});	
 		
@@ -121,10 +125,10 @@ public class FeeActivity extends Activity {
 	private void handleModifyMode(){
 		btnAdd.setVisibility(View.GONE);
 		
-		/*Fee fee = dbs.getFee(id);
+		Fee fee = dbs.getFee(id);
 		label.setText(fee.getLabel());
 		date.setText(fee.getDate());
-		amount.setText(fee.getAmount());*/
+		amount.setText(fee.getAmount());
 	}
 	
 	@Override
@@ -148,6 +152,10 @@ public class FeeActivity extends Activity {
 	            return true;
 	         case R.id.budget:
 				intent = new Intent(this, BudgetActivity.class);
+	            startActivity(intent);
+	            return true;
+			case R.id.graphics:
+	        	intent = new Intent(this, GraphicActivity.class);
 	            startActivity(intent);
 	            return true;
 	        case R.id.categories:

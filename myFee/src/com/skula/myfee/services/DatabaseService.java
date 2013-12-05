@@ -43,9 +43,10 @@ public class DatabaseService {
 		database.execSQL("create table " + TABLE_NAME_FEE + "(id integer primary key, date DATE, amount NUMERIC, label TEXT, categoryid NUMERIC)");
 		
 		// TODO: inserts...
-		insertCategory(new Category(null,"Restaurant","#808080","20"));
-		insertCategory(new Category(null,"Courses","#ff8040","200"));
-		insertCategory(new Category(null,"Sorties","#21e5b3","50"));
+		insertCategory(new Category(null,"Restaurant","#046A26","20"));
+		insertCategory(new Category(null,"Courses","#015B72","200"));
+		insertCategory(new Category(null,"Sorties","#903522","50"));
+		
 		insertFee(new Fee(null, "Kebab", "15.50","Restaurant", "2013-12-28"));
 		insertFee(new Fee(null, "Subway", "25.25","Restaurant", "2013-11-27"));
 		insertFee(new Fee(null, "McDo", "9.25","Restaurant", "2013-12-26"));
@@ -93,6 +94,29 @@ public class DatabaseService {
 			cursor.close();
 		}
 		return 1;
+	}
+	
+	public Fee getFee(String id) {
+		String req = "select f.label, f.amount, f.date, c.label, c.color "
+						+ "from fee f, category c "
+						+ "where f.id=" + id;
+		Cursor cursor = database.rawQuery(req, null);				
+		if (cursor.moveToFirst()) {
+			do {
+				Fee fee = new Fee();
+				fee.setId(id);
+				fee.setLabel(cursor.getString(0));
+				fee.setAmount(cursor.getString(1));
+				fee.setDate(cursor.getString(2));
+				fee.setCategory(cursor.getString(3));
+				fee.setColor(cursor.getString(4));
+				return fee;
+			} while (cursor.moveToNext());
+		}
+		if (cursor != null && !cursor.isClosed()) {
+			cursor.close();
+		}
+		return null;
 	}
 	
 	public void insertCategory(Category cat) {

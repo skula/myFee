@@ -51,6 +51,10 @@ public class BudgetActivity extends Activity {
 	        	intent = new Intent(this, HistoryActivity.class);
 	            startActivity(intent);
 	            return true;
+			case R.id.graphics:
+	        	intent = new Intent(this, GraphicActivity.class);
+	            startActivity(intent);
+	            return true;
 	        case R.id.categories:
 				intent = new Intent(this, CategoryListActivity.class);
 	            startActivity(intent);

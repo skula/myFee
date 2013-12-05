@@ -15,6 +15,7 @@ import android.widget.ListView;
 
 import com.skula.activities.myfee.R;
 import com.skula.myfee.activities.adapters.CategorySimpleAdapter;
+import com.skula.myfee.models.Category;
 import com.skula.myfee.services.DatabaseService;
 
 public class CategoryListActivity extends Activity {
@@ -47,13 +48,12 @@ public class CategoryListActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				/*
-				 * Category cat = (Category) arg0.getItem(arg2); Intent intent =
-				 * new Intent(arg1.getContext(), CategoryActivity.class); Bundle
-				 * mBundle = new Bundle(); mBundle.putString("categoryId",
-				 * cat.getId()); intent.putExtras(mBundle);
-				 * startActivity(intent);
-				 */
+				
+				  Category cat = (Category) catAdapter.getItem(arg2); Intent intent =
+				  new Intent(arg1.getContext(), CategoryActivity.class); Bundle
+				  mBundle = new Bundle(); mBundle.putString("categoryId",
+				  cat.getId()); intent.putExtras(mBundle);
+				  startActivity(intent);
 			}
 		});
 	}
@@ -81,6 +81,10 @@ public class CategoryListActivity extends Activity {
 			intent = new Intent(this, BudgetActivity.class);
 			startActivity(intent);
 			return true;
+		case R.id.graphics:
+	        	intent = new Intent(this, GraphicActivity.class);
+	            startActivity(intent);
+	            return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
