@@ -9,14 +9,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.skula.activities.myfee.R;
 import com.skula.myfee.activities.adapters.CategoryAdapter;
-import com.skula.myfee.activities.dialogs.AmountDialog;
 import com.skula.myfee.models.Fee;
 import com.skula.myfee.services.DatabaseService;
 
@@ -87,22 +85,22 @@ public class FeeActivity extends Activity {
 		btnAdd.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				/*Fee fee = new Fee();
+				Fee fee = new Fee();
 				fee.setLabel(label.getText().toString());
 				fee.setDate(date.getText().toString());
-				fee.amount(tmpAmount);
-				dbs.insertFee(fee);*/
+				fee.setAmount(amount.getText().toString());
+				dbs.insertFee(fee);
 			}
 		});	
 		
 		btnMod.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				/*Fee fee = new Fee();
+				Fee fee = new Fee();
 				fee.setLabel(label.getText().toString());
 				fee.setDate(date.getText().toString());
-				fee.amount(tmpAmount);
-				dbs.updateFee(id, fee);*/
+				fee.setAmount(tmpAmount);
+				dbs.updateFee(id, fee);
 			}
 		});	
 		
@@ -125,8 +123,8 @@ public class FeeActivity extends Activity {
 		
 		/*Fee fee = dbs.getFee(id);
 		label.setText(fee.getLabel());
-		//date.setText(fee.getDate());
-		amount.setText(fee.getAmount);*/
+		date.setText(fee.getDate());
+		amount.setText(fee.getAmount());*/
 	}
 	
 	@Override

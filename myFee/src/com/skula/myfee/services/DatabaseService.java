@@ -16,6 +16,7 @@ import com.skula.myfee.models.Budget;
 import com.skula.myfee.models.Category;
 import com.skula.myfee.models.Fee;
 import com.skula.myfee.models.Month;
+import com.skula.myfee.models.TimeUnit;
 
 
 public class DatabaseService {
@@ -374,6 +375,68 @@ public class DatabaseService {
 		}
 		
 		return res.toArray(new Budget[res.size()]);
+	}
+	
+	// GRAPHIQUE : variation de la somme des dépenses (y) de chaque catégorie 
+	// sur une durée (x) selon une unité de temps.
+	public Map<String, List<TimeUnit>> getGraphByWeek(int wStart, int wEnd){
+		Map<String, List<TimeUnit>> res = new HashMap<String, List<TimeUnit>>();
+		String req="select sum(ifnull(f.amount,0.0)) as total, d.week, c.label, c.color "
+					+ "from datelist d, category c LEFT JOIN fee f on f.date = d.date and c.id = f.categoryid "
+					+ "where  d.week between " + wStart + " and " + wEnd + " "
+					+ "group by c.id, d.week "
+					+ "order by c.label, d.week";
+					
+		Cursor cursor = database.rawQuery(req, null);				
+		if (cursor.moveToFirst()) {
+			do {
+				TimeUnit tu = new TimeUnit();
+				tu.setValue(cursor.getDouble(0));
+				tu.setIndex(cursor.getInt(1));
+				tu.setColor(cursor.getString(3));
+				if(res.containsKey(cursor.getString(2))){
+					 res.get(cursor.getString(2)).add(tu);
+				}else{
+					List<TimeUnit> list = new ArrayList<TimeUnit>();
+					list.add(tu);
+					res.put(cursor.getString(2), list);
+				}
+			} while (cursor.moveToNext());
+		}
+		if (cursor != null && !cursor.isClosed()) {
+			cursor.close();
+		}
+		
+		return res;
+	}
+	
+	// GRAPHIQUE: pourcentage de la somme de chaque catégorie pour 
+	// une durée donnée (camembert ou anneaux)
+	public List<Category> getGraphCircle(String dStart, String dEnd){
+		List<Category> res = new ArrayList<Category>();
+		String req = "select sum(ifnull(f.amount,0.0)) as total, sum(ifnull(f.amount,0.0))/tmp.totmonth*100 as percent, c.label, c.color "
+						+ "from fee f, category c, (select sum(amount) as totmonth "
+						+ "from fee "
+						+ "where date>='" + dStart + "' and date<='" + dEnd + "') as tmp "
+						+ "where f.date>='2013-12-01' and f.date<='2013-12-31' and f.categoryid = c.id "
+						+ "group by c.label";
+						
+		Cursor cursor = database.rawQuery(req, null);				
+		if (cursor.moveToFirst()) {
+			do {
+				Category cat = new Category();
+				cat.setTotal(cursor.getString(0));
+				cat.setPercent(cursor.getString(1));
+				cat.setLabel(cursor.getString(2));
+				cat.setColor(cursor.getString(3));
+				res.add(cat);
+			} while (cursor.moveToNext());
+		}
+		if (cursor != null && !cursor.isClosed()) {
+			cursor.close();
+		}
+		
+		return res;
 	}
 	
 	private static class OpenHelper extends SQLiteOpenHelper {

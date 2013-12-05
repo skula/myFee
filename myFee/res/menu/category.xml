@@ -16,6 +16,11 @@
         android:showAsAction="never"
         android:title="Budget"/>
 	<item
+        android:id="@+id/graphics"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="Graphiques"/>
+	<item
         android:id="@+id/categories"
         android:orderInCategory="100"
         android:showAsAction="never"

@@ -89,11 +89,18 @@ order by total desc;
 --*************************************************
 -- GRAPHIQUES
 	-- variation de la somme des dépenses (y) de chaque catégorie 
-	-- sur une durée (x) selon une unité de temps.
-select sum(f.amount) as total, strftime('%W', f.date), c.label
-from fee f, category c
-where strftime('%W', f.date) between '44' and '55' and f.categoryid = c.id
-group by  strftime('%W', f.date),  c.label
-order by strftime('%W', f.date);
+	-- 	sur une durée (x) selon une unité de temps.
+select sum(ifnull(f.amount,0.0)) as total, d.week, c.label
+from datelist d, category c LEFT JOIN fee f on f.date = d.date and c.id = f.categoryid
+where  d.week between 40 and 51
+group by c.id, d.week
+order by c.label, d.week
+
 	-- pourcentage de la somme de chaque catégorie pour 
-	-- une durée donnée (camembert ou anneaux)
+	-- 	une durée donnée (camembert ou anneaux)
+select sum(ifnull(f.amount,0.0)) as total, sum(ifnull(f.amount,0.0))/tmp.totmonth*100 as percent, c.label
+from fee f, category c, (select sum(amount) as totmonth
+						from fee
+						where date>='2013-12-01' and date<='2013-12-31') as tmp
+where f.date>='2013-12-01' and f.date<='2013-12-31' and f.categoryid = c.id
+group by c.label;
