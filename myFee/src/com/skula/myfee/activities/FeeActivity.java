@@ -128,7 +128,8 @@ public class FeeActivity extends Activity {
 		Fee fee = dbs.getFee(id);
 		label.setText(fee.getLabel());
 		date.setText(fee.getDate());
-		amount.setText(fee.getAmount());
+		tmpAmount = fee.getAmount();
+		amount.setText(tmpAmount.replace(".", ",") + " €");
 	}
 	
 	@Override

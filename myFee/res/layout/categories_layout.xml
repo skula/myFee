@@ -5,16 +5,19 @@
     android:orientation="vertical"
     android:paddingBottom="30px"
     android:paddingLeft="30px"
-    android:paddingRight="30px" 
+    android:paddingRight="30px"
     android:paddingTop="10px" >
 
     <Button
         android:id="@+id/categories_btnAdd"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" 
+        android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_marginBottom="10px"
-        android:text="Ajouter"/>
+        android:background="@drawable/btn_grey"
+        android:textSize="34dip"
+        android:text="+"
+        android:textColor="#ffffff" />
 
     <ListView
         android:id="@+id/categories_list"
