@@ -1,25 +1,25 @@
 package com.skula.myfee.models;
 
 public class TimeUnit {
-	private int index;
+	private String label;
 	private double value;
 	private String color;
 	
 	public TimeUnit() {
 	}
 
-	public TimeUnit(int index, double value, String color) {
-		this.index = index;
+	public TimeUnit(String label, double value, String color) {
+		this.label = label;
 		this.value = value;
 		this.color = color;
 	}
 
-	public int getIndex() {
-		return index;
+	public String getlabel() {
+		return label;
 	}
 
-	public void setIndex(int index) {
-		this.index = index;
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 	public double getValue() {

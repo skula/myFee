@@ -14,8 +14,10 @@ import android.database.sqlite.SQLiteStatement;
 
 import com.skula.myfee.models.Budget;
 import com.skula.myfee.models.Category;
+import com.skula.myfee.models.CurveGraphic;
 import com.skula.myfee.models.Fee;
 import com.skula.myfee.models.Month;
+import com.skula.myfee.models.RingGraphic;
 import com.skula.myfee.models.TimeUnit;
 
 
@@ -403,7 +405,7 @@ public class DatabaseService {
 	
 	// GRAPHIQUE : variation de la somme des dépenses (y) de chaque catégorie 
 	// sur une durée (x) selon une unité de temps.
-	public Map<String, List<TimeUnit>> getGraphByWeek(int wStart, int wEnd){
+	public CurveGraphic getGraphByWeek(int wStart, int wEnd){
 		Map<String, List<TimeUnit>> res = new HashMap<String, List<TimeUnit>>();
 		String req="select sum(ifnull(f.amount,0.0)) as total, d.week, c.label, c.color "
 					+ "from datelist d, category c LEFT JOIN fee f on f.date = d.date and c.id = f.categoryid "
@@ -416,7 +418,7 @@ public class DatabaseService {
 			do {
 				TimeUnit tu = new TimeUnit();
 				tu.setValue(cursor.getDouble(0));
-				tu.setIndex(cursor.getInt(1));
+				tu.setLabel("s" + cursor.getString(1));
 				tu.setColor(cursor.getString(3));
 				if(res.containsKey(cursor.getString(2))){
 					 res.get(cursor.getString(2)).add(tu);
@@ -431,12 +433,17 @@ public class DatabaseService {
 			cursor.close();
 		}
 		
-		return res;
+		CurveGraphic graph = new CurveGraphic();
+		graph.setTimeUnits(res);
+		if(!res.isEmpty()){
+			graph.setTitle("Coucou!");
+		}
+		return graph;
 	}
 	
 	// GRAPHIQUE: pourcentage de la somme de chaque catégorie pour 
 	// une durée donnée (camembert ou anneaux)
-	public List<Category> getGraphCircle(String dStart, String dEnd){
+	public RingGraphic getGraphCircle(String dStart, String dEnd){
 		List<Category> res = new ArrayList<Category>();
 		String req = "select sum(ifnull(f.amount,0.0)) as total, sum(ifnull(f.amount,0.0))/tmp.totmonth*100 as percent, c.label, c.color "
 						+ "from fee f, category c, (select sum(amount) as totmonth "
@@ -460,7 +467,10 @@ public class DatabaseService {
 			cursor.close();
 		}
 		
-		return res;
+		RingGraphic graph = new RingGraphic();
+		graph.setCategories(res);
+		graph.setTitle("Coucou");
+		return graph;
 	}
 	
 	private static class OpenHelper extends SQLiteOpenHelper {

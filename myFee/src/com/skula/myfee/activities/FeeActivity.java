@@ -32,8 +32,9 @@ public class FeeActivity extends Activity {
 	private EditText date;
 	private TextView amount;
 	
-	private String id;
 	private String tmpAmount;
+	private Fee fee;
+	
 	private boolean modeCrea;
 	
 	@Override
@@ -41,6 +42,7 @@ public class FeeActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fee_layout);
 		
+		this.fee = new Fee();
 		dbs = new DatabaseService(this);
 
 		listView = (ListView) findViewById(R.id.fee_categories);
@@ -59,12 +61,12 @@ public class FeeActivity extends Activity {
 		date = (EditText) findViewById(R.id.fee_date);
 		amount = (TextView) findViewById(R.id.fee_amount);
 		
-		id = getIntent().getExtras().getString("feeId");
-		tmpAmount = getIntent().getExtras().getString("feeAmount");
+		String id = getIntent().getExtras().getString("feeId");
+		fee.setAmount(getIntent().getExtras().getString("feeAmount"));
 		if(id == null){
 			handleCreateMode();
 		}else{
-			handleModifyMode();
+			handleModifyMode(id);
 		}
 		
 		amount.setOnClickListener(new OnClickListener() {
@@ -86,11 +88,11 @@ public class FeeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				if(!tmpAmount.isEmpty()){
-					Fee fee = new Fee();
-					fee.setLabel(label.getText().toString());
-					fee.setDate(date.getText().toString());
-					fee.setAmount(amount.getText().toString());
-					dbs.insertFee(fee);
+					Fee tmp = new Fee();
+					tmp.setLabel(label.getText().toString());
+					tmp.setDate(date.getText().toString());
+					tmp.setAmount(fee.getAmount());
+					dbs.insertFee(tmp);
 				}
 			}
 		});	
@@ -99,11 +101,11 @@ public class FeeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				if(!tmpAmount.isEmpty()){
-					Fee fee = new Fee();
-					fee.setLabel(label.getText().toString());
-					fee.setDate(date.getText().toString());
-					fee.setAmount(tmpAmount);
-					dbs.updateFee(id, fee);
+					Fee tmp = new Fee();
+					tmp.setLabel(label.getText().toString());
+					tmp.setDate(date.getText().toString());
+					tmp.setAmount(fee.getAmount());
+					dbs.updateFee(fee.getId(), tmp);
 				}
 			}
 		});	
@@ -111,7 +113,7 @@ public class FeeActivity extends Activity {
 		btnDel.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				dbs.deleteFee(id);			
+				dbs.deleteFee(fee.getId());			
 			}
 		});	
 	}
@@ -119,17 +121,15 @@ public class FeeActivity extends Activity {
 	private void handleCreateMode(){
 		btnMod.setVisibility(View.GONE);
 		btnDel.setVisibility(View.GONE);
-		amount.setText(tmpAmount.replace(".",",") + " €");
+		//amount.setText(tmpAmount.replace(".",",") + " €");
 	}
 	
-	private void handleModifyMode(){
+	private void handleModifyMode(String id){
 		btnAdd.setVisibility(View.GONE);
-		
-		Fee fee = dbs.getFee(id);
+		fee = dbs.getFee(id);
 		label.setText(fee.getLabel());
 		date.setText(fee.getDate());
-		tmpAmount = fee.getAmount();
-		amount.setText(tmpAmount.replace(".", ",") + " €");
+		amount.setText(fee.getAmount().replace(".", ",") + " €");
 	}
 	
 	@Override

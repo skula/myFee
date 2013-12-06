@@ -21,7 +21,7 @@ import com.skula.myfee.services.DatabaseService;
 
 public class CategoryActivity extends Activity {
 	private DatabaseService dbs;
-	private String id;
+	private Category cat;
 	private boolean modeCrea;
 	
 	private Button btnCancel;
@@ -36,7 +36,7 @@ public class CategoryActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.category_layout);
-		
+		this.cat = new Category();
 		dbs = new DatabaseService(this);
 		
 		color = (Spinner) findViewById(R.id.category_color);
@@ -49,13 +49,12 @@ public class CategoryActivity extends Activity {
 		btnMod = (Button) findViewById(R.id.category_btnMod);
 		btnDel = (Button) findViewById(R.id.category_btnDel);
 		
-		id = getIntent().getExtras().getString("categoryId");
+		String id = getIntent().getExtras().getString("categoryId");
 		if(id == null){
 			handleCreateMode();
 		}else{
-			handleModifyMode();
+			handleModifyMode(id);
 		}
-		
 		
 		btnCancel.setOnClickListener(new OnClickListener() {
 			@Override
@@ -91,13 +90,19 @@ public class CategoryActivity extends Activity {
 		btnDel.setVisibility(View.GONE);
 	}
 	
-	private void handleModifyMode(){
+	private void handleModifyMode(String id){
 		btnAdd.setVisibility(View.GONE);
-		Category cat = dbs.getCategory(id);
+		cat = dbs.getCategory(id);
 		label.setText(cat.getLabel());
 		budget.setText(cat.getBudget());
-		//int col = Color.parseColor(cat.getColor());
-		//color.setBackgroundColor(col);
+		
+		int index = 0;
+		for(; index<Cnst.COLORS.length; index++){
+			if(Cnst.COLORS[index].equals(cat.getColor())){
+				break;
+			}
+		}
+		//color.setSelection(index);
 	}
 	
 	@Override

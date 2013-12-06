@@ -33,7 +33,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="1"
-            android:textSize="30dip" />
+            android:textSize="30dip" 
+			android:textColor="#ffffff"
+			android:background="@drawable/btn_grey"/>
 
         <Button
             android:id="@+id/amount_btn_2"
@@ -41,7 +43,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="2"
-            android:textSize="30dip" />
+            android:textSize="30dip"
+			android:textColor="#ffffff"
+			android:background="@drawable/btn_grey"/>
 
         <Button
             android:id="@+id/amount_btn_3"
@@ -49,7 +53,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="3"
-            android:textSize="30dip" />
+            android:textSize="30dip" 
+			android:textColor="#ffffff"
+			android:background="@drawable/btn_grey"/>
     </LinearLayout>
 
     <LinearLayout
@@ -63,7 +69,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="4"
-            android:textSize="30dip" />
+            android:textSize="30dip" 
+			android:textColor="#ffffff"
+			android:background="@drawable/btn_grey"/>
 
         <Button
             android:id="@+id/amount_btn_5"
@@ -71,7 +79,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="5"
-            android:textSize="30dip" />
+            android:textSize="30dip" 
+			android:textColor="#ffffff"
+			android:background="@drawable/btn_grey"/>
 
         <Button
             android:id="@+id/amount_btn_6"
@@ -79,7 +89,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="6"
-            android:textSize="30dip" />
+            android:textSize="30dip" 
+			android:textColor="#ffffff"
+			android:background="@drawable/btn_grey"/>
     </LinearLayout>
 
     <LinearLayout
@@ -93,7 +105,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="7"
-            android:textSize="30dip" />
+            android:textSize="30dip" 
+			android:textColor="#ffffff"
+			android:background="@drawable/btn_grey"/>
 
         <Button
             android:id="@+id/amount_btn_8"
@@ -101,7 +115,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="8"
-            android:textSize="30dip" />
+            android:textSize="30dip" 
+			android:textColor="#ffffff"
+			android:background="@drawable/btn_grey"/>
 
         <Button
             android:id="@+id/amount_btn_9"
@@ -109,7 +125,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="9"
-            android:textSize="30dip" />
+            android:textSize="30dip" 
+			android:textColor="#ffffff"
+			android:background="@drawable/btn_grey"/>
     </LinearLayout>
 
     <LinearLayout
@@ -123,7 +141,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text=","
-            android:textSize="30dip" />
+            android:textSize="30dip" 
+			android:textColor="#ffffff"
+			android:background="@drawable/btn_grey"/>
 
         <Button
             android:id="@+id/amount_btn_0"
@@ -131,7 +151,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="0"
-            android:textSize="30dip" />
+            android:textSize="30dip"
+			android:textColor="#ffffff"
+			android:background="@drawable/btn_grey" />
 
         <Button
             android:id="@+id/amount_btn_del"
@@ -139,7 +161,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Raz"
-            android:textSize="30dip" />
+            android:textSize="30dip" 
+			android:textColor="#ffffff"
+			android:background="@drawable/btn_grey"/>
     </LinearLayout>
 
     <View
@@ -159,14 +183,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Annuler" />
+            android:text="Annuler" 
+			android:textColor="#ffffff"
+			android:background="@drawable/btn_grey"/>
 
         <Button
             android:id="@+id/amount_btn_continue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Continuer" />
+            android:text="Continuer" 
+			android:textColor="#ffffff"
+			android:background="@drawable/btn_grey"/>
     </LinearLayout>
 
 </LinearLayout>

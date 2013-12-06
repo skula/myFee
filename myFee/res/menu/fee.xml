@@ -21,9 +21,9 @@
         android:showAsAction="never"
         android:title="Graphiques"/>
     <item
-        android:id="@+id/parameters"
+        android:id="@+id/categories"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="Paramètres"/>
+        android:title="Catégories"/>
 
 </menu>
