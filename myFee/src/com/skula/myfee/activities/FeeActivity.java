@@ -62,19 +62,20 @@ public class FeeActivity extends Activity {
 		date = (EditText) findViewById(R.id.fee_date);
 		amount = (TextView) findViewById(R.id.fee_amount);
 		
-		/*String id = getIntent().getExtras().getString("feeId");
-		fee.setAmount(getIntent().getExtras().getString("feeAmount"));
+		Bundle bundle = getIntent().getExtras();
+		String id = bundle==null? null: bundle.getString("feeId");
 		if(id == null){
 			handleCreateMode();
 		}else{
 			handleModifyMode(id);
-		}*/
+		}
 		
+		final FeeActivity act = this;
 		amount.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//AmountDialog ad = new AmountDialog(v.getContext());
-				//ad.show();
+				AmountDialog ad = new AmountDialog(act);
+				ad.show();	
 			}
 		});	
 		
@@ -115,15 +116,6 @@ public class FeeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				dbs.deleteFee(fee.getId());			
-			}
-		});	
-		
-		final FeeActivity act = this;
-		amount.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				AmountDialog ad = new AmountDialog(act);
-				ad.show();	
 			}
 		});	
 		

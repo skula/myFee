@@ -1,4 +1,4 @@
-package com.skula.myfee.activities;
+package com.skula.myfee.activities.dialogs;
 import java.util.Calendar;
 
 import android.app.Activity;

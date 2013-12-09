@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:paddingBottom="20px"
+    android:paddingLeft="20px"
+    android:paddingRight="20px"
+    android:paddingTop="20px" >
+
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<TextView
+			android:layout_width="250px"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="5px"
+			android:layout_marginLeft="10px"
+			android:layout_marginTop="10px"
+			android:text="Type de graphique: "
+			android:textSize="18dip" />
+		<Spinner
+			android:id="@+id/graphic_dial_type"
+			android:entries="@array/graphic_type"
+			android:layout_width="400px"
+			android:layout_height="wrap_content"/>
+	</LinearLayout>
+	
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<TextView
+			android:layout_width="250px"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="5px"
+			android:layout_marginLeft="10px"
+			android:layout_marginTop="10px"
+			android:text="Unité: "
+			android:textSize="18dip" />
+		<Spinner
+			android:id="@+id/graphic_dial_unit"
+			android:entries="@array/graphic_unit"
+			android:layout_width="400px"
+			android:layout_height="wrap_content"/>
+	</LinearLayout>
+	
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<TextView
+			android:layout_width="250px"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="5px"
+			android:layout_marginLeft="10px"
+			android:layout_marginTop="10px"
+			android:text="Nombre d'unités: "
+			android:textSize="18dip" />
+		<EditText
+			android:id="@+id/graphic_dial_count"
+			android:layout_width="400px"
+			android:layout_height="wrap_content"/>
+	</LinearLayout>
+	
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<TextView
+			android:layout_width="250px"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="5px"
+			android:layout_marginLeft="10px"
+			android:layout_marginTop="10px"
+			android:text="Mois: "
+			android:textSize="18dip" />
+		<Spinner
+			android:id="@+id/graphic_dial_month"
+			android:entries="@array/months"
+			android:layout_width="400px"
+			android:layout_height="wrap_content"/>
+	</LinearLayout>
+	
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="3px"
+        android:layout_marginBottom="20px"
+        android:layout_marginTop="10px"
+        android:background="#c0c0c0" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/graphic_dial_btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Annuler" 
+			android:textColor="#ffffff"
+			android:background="@drawable/btn_grey"/>
+
+        <Button
+            android:id="@+id/graphic_dial_btn_continue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Continuer" 
+			android:textColor="#ffffff"
+			android:background="@drawable/btn_grey"/>
+    </LinearLayout>
+
+</LinearLayout>

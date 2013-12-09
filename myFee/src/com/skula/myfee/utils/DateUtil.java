@@ -3,7 +3,6 @@ package com.skula.myfee.utils;
 import java.util.Calendar;
 
 public class DateUtil {
-
 	public static String getDateFormat(String sqliteDate){
 		String split[] = sqliteDate.split("-");
 		Calendar cal= Calendar.getInstance();

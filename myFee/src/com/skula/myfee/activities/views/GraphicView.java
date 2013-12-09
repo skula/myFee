@@ -15,6 +15,11 @@ public class GraphicView extends View {
 	private DrawerService drawer;
 	// android:clearTaskOnLaunch
 	// android:noHistory
+	
+	public GraphicView(Context context) {
+		 super(context);
+	}
+	
 	public GraphicView(Context context, Map<String, List<TimeUnit>> timeUnits) {
 		 super(context);
 		 //this.drawer = new DrawerService(context.getResources(), timeUnits);

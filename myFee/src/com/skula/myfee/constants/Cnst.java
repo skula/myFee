@@ -17,7 +17,7 @@ public class Cnst {
 		COLORS[8] = "#E679DF";
 		COLORS[9] = "#72126C";
 		COLORS[10] = "#717063";
-		COLORS[11] = "#2A2A24";
+		COLORS[11] = "#2A2A24";		
 	}
 	
 	private Cnst(){
