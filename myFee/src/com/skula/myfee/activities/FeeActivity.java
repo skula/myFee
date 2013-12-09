@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.skula.activities.myfee.R;
 import com.skula.myfee.activities.adapters.CategoryAdapter;
+import com.skula.myfee.activities.dialogs.AmountDialog;
 import com.skula.myfee.models.Fee;
 import com.skula.myfee.services.DatabaseService;
 
@@ -61,13 +62,13 @@ public class FeeActivity extends Activity {
 		date = (EditText) findViewById(R.id.fee_date);
 		amount = (TextView) findViewById(R.id.fee_amount);
 		
-		String id = getIntent().getExtras().getString("feeId");
+		/*String id = getIntent().getExtras().getString("feeId");
 		fee.setAmount(getIntent().getExtras().getString("feeAmount"));
 		if(id == null){
 			handleCreateMode();
 		}else{
 			handleModifyMode(id);
-		}
+		}*/
 		
 		amount.setOnClickListener(new OnClickListener() {
 			@Override
@@ -116,6 +117,18 @@ public class FeeActivity extends Activity {
 				dbs.deleteFee(fee.getId());			
 			}
 		});	
+		
+		final FeeActivity act = this;
+		amount.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				AmountDialog ad = new AmountDialog(act);
+				ad.show();	
+			}
+		});	
+		
+		AmountDialog ad = new AmountDialog(this);
+		ad.show();
 	}
 	
 	private void handleCreateMode(){
@@ -129,6 +142,11 @@ public class FeeActivity extends Activity {
 		fee = dbs.getFee(id);
 		label.setText(fee.getLabel());
 		date.setText(fee.getDate());
+		amount.setText(fee.getAmount().replace(".", ",") + " €");
+	}
+	
+	public void setAmount(String amnt){
+		fee.setAmount(amnt);
 		amount.setText(fee.getAmount().replace(".", ",") + " €");
 	}
 	

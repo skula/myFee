@@ -82,8 +82,8 @@ public class MonthActivity extends Activity {
 		Intent intent;
 	    switch (item.getItemId()) {
 	        case R.id.add_fee:
-				AmountDialog ad = new AmountDialog(this);
-				ad.show();
+	        	intent = new Intent(this, FeeActivity.class);
+	            startActivity(intent);
 	            return true;
 	        case R.id.history:
 	        	intent = new Intent(this, HistoryActivity.class);

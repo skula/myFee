@@ -118,7 +118,7 @@ public class PasswordActivity extends Activity implements OnClickListener {
 
                 if (number > 4) {
                         if (passwd.equals(getEntry())) {
-                                //startActivityForResult(new Intent(this, FeeListActivity.class), 0);
+                               startActivityForResult(new Intent(this, MonthActivity.class), 0);
                         } else {
                                 pwError.setText("Code secret incorrecte.");
                                 number = 1;

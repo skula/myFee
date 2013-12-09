@@ -49,7 +49,8 @@ public class CategoryActivity extends Activity {
 		btnMod = (Button) findViewById(R.id.category_btnMod);
 		btnDel = (Button) findViewById(R.id.category_btnDel);
 		
-		String id = getIntent().getExtras().getString("categoryId");
+		Bundle bundle = getIntent().getExtras(); //.getString("categoryId");
+		String id = bundle==null? null: bundle.getString("categoryId");
 		if(id == null){
 			handleCreateMode();
 		}else{

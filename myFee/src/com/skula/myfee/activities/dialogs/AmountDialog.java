@@ -16,7 +16,7 @@ import com.skula.myfee.activities.FeeActivity;
 
 public class AmountDialog extends Dialog implements OnClickListener {
 
-	public Activity parentActivity;
+	public FeeActivity parentActivity;
 	public Button btn0;
 	public Button btn1;
 	public Button btn2;
@@ -35,7 +35,7 @@ public class AmountDialog extends Dialog implements OnClickListener {
 	public TextView label;
 	public String amount;
 	
-	public AmountDialog(Activity parentActivity) {
+	public AmountDialog(FeeActivity parentActivity) {
 		super(parentActivity);
 		this.parentActivity = parentActivity;
 	}
@@ -123,13 +123,12 @@ public class AmountDialog extends Dialog implements OnClickListener {
 			label.setText(formatAmount());
 			break;
 			case R.id.amount_btn_cancel:
-			dismiss();
+			parentActivity.setAmount("0.0");
+			dismiss();			
 			break;
 			case R.id.amount_btn_continue:
+			parentActivity.setAmount(formatDouble());
 			dismiss();
-			Intent intent = new Intent(parentActivity, FeeActivity.class);
-			intent.putExtra("feeAmount", formatDouble());
-	        v.getContext().startActivity(intent);
 			break;
 			default:
 			dismiss();
