@@ -27,13 +27,12 @@
         android:textColor="#3c3c3c"
         android:textSize="16dip" />
 
-    <CheckedTextView
+    <RadioButton
         android:id="@+id/category_item_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center_vertical"
-        android:checkMark="@android:drawable/btn_radio"
         android:checked="false"
         android:clickable="false"
         android:focusable="false" />

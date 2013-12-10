@@ -1,6 +1,8 @@
 package com.skula.myfee.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -89,38 +91,84 @@ public class FeeActivity extends Activity {
 		btnAdd.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(!tmpAmount.isEmpty()){
-					Fee tmp = new Fee();
-					tmp.setLabel(label.getText().toString());
-					tmp.setDate(date.getText().toString());
-					tmp.setAmount(fee.getAmount());
-					dbs.insertFee(tmp);
-				}
+				Fee tmp = new Fee();
+				tmp.setLabel(label.getText().toString());
+				tmp.setDate(date.getText().toString());
+				tmp.setAmount(fee.getAmount());
+				dbs.insertFee(tmp);
 			}
 		});	
 		
 		btnMod.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(!tmpAmount.isEmpty()){
+				/*if(!tmpAmount.isEmpty()){
 					Fee tmp = new Fee();
 					tmp.setLabel(label.getText().toString());
 					tmp.setDate(date.getText().toString());
 					tmp.setAmount(fee.getAmount());
 					dbs.updateFee(fee.getId(), tmp);
-				}
+				}*/
+				handleModify(act);
 			}
 		});	
 		
 		btnDel.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				dbs.deleteFee(fee.getId());			
+				//dbs.deleteFee(fee.getId());			
+				handleDelete(act);
 			}
 		});	
 		
 		AmountDialog ad = new AmountDialog(this);
 		ad.show();
+	}
+	
+	public void handleModify(final FeeActivity mainActivity) {
+		AlertDialog.Builder helpBuilder = new AlertDialog.Builder(mainActivity);
+		helpBuilder.setTitle("Modification");
+		helpBuilder.setMessage("Etes-vous sûr de vouloir modifier cette dépense ?");
+		helpBuilder.setPositiveButton("Oui",
+						new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int which) {
+										modify();
+								}
+						});
+		helpBuilder.setNegativeButton("Non",
+						new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int which) {
+								}
+						});
+		AlertDialog helpDialog = helpBuilder.create();
+		helpDialog.show();
+	}
+	
+	public void handleDelete(final FeeActivity mainActivity) {
+		AlertDialog.Builder helpBuilder = new AlertDialog.Builder(mainActivity);
+		helpBuilder.setTitle("Suppression");
+		helpBuilder.setMessage("Etes-vous sûr de vouloir supprimer cette dépense ?");
+		helpBuilder.setPositiveButton("Oui",
+						new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int which) {
+										delete();
+								}
+						});
+		helpBuilder.setNegativeButton("Non",
+						new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int which) {
+								}
+						});
+		AlertDialog helpDialog = helpBuilder.create();
+		helpDialog.show();
+	}
+	
+	public void modify(){
+	
+	}
+	
+	public void delete(){
+	
 	}
 	
 	private void handleCreateMode(){

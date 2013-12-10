@@ -43,8 +43,8 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
 		TextView label = (TextView) row.findViewById(R.id.category_item_label);
 		label.setText(itemList.get(position).getLabel());
 		
-		CheckedTextView checkBox = (CheckedTextView) row.findViewById(R.id.category_item_state);
-		checkBox.setChecked(true);//list.getCheckedItemPosition() == position);
+		//CheckedTextView checkBox = (CheckedTextView) row.findViewById(R.id.category_item_state);
+		//checkBox.setChecked(true);//list.getCheckedItemPosition() == position);
 		return (row);
 	}
 }

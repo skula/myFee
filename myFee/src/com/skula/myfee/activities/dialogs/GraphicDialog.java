@@ -1,9 +1,9 @@
 package com.skula.myfee.activities.dialogs;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,7 +13,7 @@ import com.skula.activities.myfee.R;
 import com.skula.myfee.activities.GraphicActivity;
 
 
-public class GraphicDialog extends Dialog {
+public class GraphicDialog extends Dialog implements OnClickListener {
 	public GraphicActivity parentActivity;
 	public Button btnCancel;
 	public Button btnContinue;
@@ -39,6 +39,29 @@ public class GraphicDialog extends Dialog {
 		count = (EditText) findViewById(R.id.graphic_dial_count);
 		
 		btnCancel = (Button) findViewById(R.id.graphic_dial_btn_cancel);
-		btnContinue = (Button) findViewById(R.id.graphic_dial_btn_continue);
+		btnCancel.setOnClickListener(this);
+		btnContinue = (Button) findViewById(R.id.graphic_dial_btn_continue);		
+		btnContinue.setOnClickListener(this);
+		
+		
+	}
+	
+	@Override
+	public void onClick(View v) {
+		switch(v.getId()){
+		case R.id.amount_btn_cancel:
+			dismiss();			
+			break;
+		case R.id.amount_btn_continue:
+			String type = typeSpin.getItemAtPosition(typeSpin.getSelectedItemPosition()).toString();
+			String unit = unitSpin.getItemAtPosition(unitSpin.getSelectedItemPosition()).toString();
+			String month = monthSpin.getItemAtPosition(monthSpin.getSelectedItemPosition()).toString();
+			parentActivity.init(type, unit, count.getText().toString());
+			dismiss();
+			break;
+		default:
+			dismiss();
+			break;
+		}
 	}
 }

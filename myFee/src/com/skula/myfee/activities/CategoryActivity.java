@@ -1,6 +1,8 @@
 package com.skula.myfee.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -39,6 +41,8 @@ public class CategoryActivity extends Activity {
 		this.cat = new Category();
 		dbs = new DatabaseService(this);
 		
+		final CategoryActivity act = this;
+		
 		color = (Spinner) findViewById(R.id.category_color);
 		color.setAdapter(new ColorAdapter(this, R.id.color_list_item_ref, Cnst.COLORS));
 		label = (EditText)findViewById(R.id.category_label);
@@ -67,23 +71,70 @@ public class CategoryActivity extends Activity {
 		btnAdd.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-								
+				Category tmp = new Category();
+				
 			}
 		});	
 		
 		btnMod.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-								
+				handleModify(act);
 			}
 		});	
 		
 		btnDel.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-								
+				handleDelete(act);
 			}
 		});	
+	}
+	
+	public void handleModify(final CategoryActivity mainActivity) {
+		AlertDialog.Builder helpBuilder = new AlertDialog.Builder(mainActivity);
+		helpBuilder.setTitle("Modification");
+		helpBuilder.setMessage("Etes-vous sûr de vouloir modifier cette catégorie ?");
+		helpBuilder.setPositiveButton("Oui",
+						new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int which) {
+										modify();
+								}
+						});
+		helpBuilder.setNegativeButton("Non",
+						new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int which) {
+								}
+						});
+		AlertDialog helpDialog = helpBuilder.create();
+		helpDialog.show();
+	}
+	
+	public void handleDelete(final CategoryActivity mainActivity) {
+		AlertDialog.Builder helpBuilder = new AlertDialog.Builder(mainActivity);
+		helpBuilder.setTitle("Suppression");
+		helpBuilder.setMessage("Etes-vous sûr de vouloir supprimer cette catégorie ?");
+		helpBuilder.setPositiveButton("Oui",
+						new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int which) {
+										delete();
+								}
+						});
+		helpBuilder.setNegativeButton("Non",
+						new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int which) {
+								}
+						});
+		AlertDialog helpDialog = helpBuilder.create();
+		helpDialog.show();
+	}
+	
+	public void modify(){
+	
+	}
+	
+	public void delete(){
+	
 	}
 	
 	private void handleCreateMode(){

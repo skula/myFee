@@ -1,25 +1,35 @@
 package com.skula.myfee.services;
 
-import java.util.List;
-import java.util.Map;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-import com.skula.myfee.models.TimeUnit;
+import com.skula.myfee.models.CurveGraphic;
+import com.skula.myfee.models.RingGraphic;
 
 
 public class DrawerService {
 	private Paint paint;
     private Resources res;
-	private Map<String, List<TimeUnit>> timeUnits;
+	private CurveGraphic cGraph;
+	private RingGraphic rGraph;
 
-	public DrawerService(Context context, Map<String, List<TimeUnit>> timeUnits) {
+	public DrawerService(Context context) {
 		this.res = res;
         this.paint = new Paint();
-		this.timeUnits = timeUnits;
+	}
+	
+	public DrawerService(Context context, CurveGraphic cGraph) {
+		this.res = res;
+        this.paint = new Paint();
+		this.cGraph = cGraph;
+	}
+	
+	public DrawerService(Context context, RingGraphic rGraph) {
+		this.res = res;
+        this.paint = new Paint();
+		this.rGraph = rGraph;
 	}
 
 	public void draw(Canvas c){
