@@ -123,6 +123,14 @@
                 android:paddingTop="15px"
                 android:textColor="#3c3c3c"
                 android:textSize="18dip" />
+			<Button
+				android:id="@+id/fee_btnDate"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:background="@drawable/btn_grey"
+				android:text="!"
+				android:textColor="#ffffff" />
         </LinearLayout>
 
         <LinearLayout

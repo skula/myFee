@@ -1,7 +1,12 @@
 package com.skula.myfee.activities;
 
+import java.util.Calendar;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,9 +16,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.skula.activities.myfee.R;
 import com.skula.myfee.activities.adapters.CategoryAdapter;
@@ -34,9 +41,15 @@ public class FeeActivity extends Activity {
 	private EditText label;
 	private EditText date;
 	private TextView amount;
+	private Button btnDate;
 	
 	private String tmpAmount;
 	private Fee fee;
+	
+	final int Date_Dialog_ID = 0;
+	private int cDay,cMonth,cYear; // this is the instances of the current date
+	private Calendar cDate;
+	private int sDay,sMonth,sYear; // this is the instances of the entered date
 	
 	private boolean modeCrea;
 	
@@ -63,6 +76,18 @@ public class FeeActivity extends Activity {
 		label = (EditText) findViewById(R.id.fee_label);
 		date = (EditText) findViewById(R.id.fee_date);
 		amount = (TextView) findViewById(R.id.fee_amount);
+		btnDate = (Button) findViewById(R.id.fee_btnDate);
+		
+		//getting current date
+		cDate=Calendar.getInstance();
+		cDay=cDate.get(Calendar.DAY_OF_MONTH);
+		cMonth=cDate.get(Calendar.MONTH);
+		cYear=cDate.get(Calendar.YEAR);
+		//assigning the edittext with the current date in the beginning
+		sDay=cDay;
+		sMonth=cMonth;
+		sYear=cYear;
+		updateDateDisplay(sYear,sMonth,sDay);
 		
 		Bundle bundle = getIntent().getExtras();
 		String id = bundle==null? null: bundle.getString("feeId");
@@ -81,6 +106,13 @@ public class FeeActivity extends Activity {
 			}
 		});	
 		
+		btnDate.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showDialog(Date_Dialog_ID);
+			}
+		});
+		
 		btnCancel.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -96,27 +128,20 @@ public class FeeActivity extends Activity {
 				tmp.setDate(date.getText().toString());
 				tmp.setAmount(fee.getAmount());
 				dbs.insertFee(tmp);
+				Toast.makeText(v.getContext(), "Dépense ajoutée.", Toast.LENGTH_SHORT).show();
 			}
 		});	
 		
 		btnMod.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				/*if(!tmpAmount.isEmpty()){
-					Fee tmp = new Fee();
-					tmp.setLabel(label.getText().toString());
-					tmp.setDate(date.getText().toString());
-					tmp.setAmount(fee.getAmount());
-					dbs.updateFee(fee.getId(), tmp);
-				}*/
 				handleModify(act);
 			}
 		});	
 		
 		btnDel.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {
-				//dbs.deleteFee(fee.getId());			
+			public void onClick(View v) {		
 				handleDelete(act);
 			}
 		});	
@@ -124,6 +149,29 @@ public class FeeActivity extends Activity {
 		AmountDialog ad = new AmountDialog(this);
 		ad.show();
 	}
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+		case Date_Dialog_ID:
+			return new DatePickerDialog(this, onDateSet, cYear, cMonth,cDay);
+		}
+		return null;
+	}
+
+	private void updateDateDisplay(int year, int month, int day) {
+		date.setText(day+"/"+(month+1)+"/"+year);
+	}
+	
+	private OnDateSetListener onDateSet=new OnDateSetListener() {
+		@Override
+		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+			sYear=year;
+			sMonth=monthOfYear;
+			sDay=dayOfMonth;
+			updateDateDisplay(sYear,sMonth,sDay);
+		}
+	};
 	
 	public void handleModify(final FeeActivity mainActivity) {
 		AlertDialog.Builder helpBuilder = new AlertDialog.Builder(mainActivity);
@@ -164,17 +212,21 @@ public class FeeActivity extends Activity {
 	}
 	
 	public void modify(){
-	
+		Fee tmp = new Fee();
+		tmp.setLabel(label.getText().toString());
+		tmp.setDate(date.getText().toString());
+		// TODO : get color
+		tmp.setAmount(fee.getAmount());
+		dbs.updateFee(fee.getId(), tmp);
 	}
 	
 	public void delete(){
-	
+		dbs.deleteFee(fee.getId());
 	}
 	
 	private void handleCreateMode(){
 		btnMod.setVisibility(View.GONE);
 		btnDel.setVisibility(View.GONE);
-		//amount.setText(tmpAmount.replace(".",",") + " €");
 	}
 	
 	private void handleModifyMode(String id){
@@ -183,6 +235,7 @@ public class FeeActivity extends Activity {
 		label.setText(fee.getLabel());
 		date.setText(fee.getDate());
 		amount.setText(fee.getAmount().replace(".", ",") + " €");
+		// TODO : set color
 	}
 	
 	public void setAmount(String amnt){
