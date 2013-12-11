@@ -14,7 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/btn_grey"
+            android:background="@drawable/btn_dark_grey"
             android:text="Annuler"
             android:textColor="#ffffff" />
 
@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/btn_grey"
+            android:background="@drawable/btn_dark_grey"
             android:text="Modifier"
             android:textColor="#ffffff" />
 
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/btn_grey"
+            android:background="@drawable/btn_dark_grey"
             android:text="Supprimer"
             android:textColor="#ffffff" />
 
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/btn_grey"
+            android:background="@drawable/btn_dark_grey"
             android:text="Ajouter"
             android:textColor="#ffffff" />
     </LinearLayout>
@@ -129,7 +129,7 @@
 				android:layout_width="100px"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
-				android:background="@drawable/btn_grey"
+				android:background="@drawable/btn_dark_grey"
 				android:text="!"
 				android:textColor="#ffffff" />
         </LinearLayout>

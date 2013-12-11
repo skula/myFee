@@ -55,7 +55,7 @@ public class HistoryListAdapter extends BaseExpandableListAdapter {
 		TextView id = (TextView) convertView.findViewById(R.id.histo_list_item_id);
         id.setText(fee.getId());
         TextView date = (TextView) convertView.findViewById(R.id.histo_list_item_date);
-        date.setText(DateUtil.getDateFormat(fee.getDate()));
+        date.setText(DateUtil.getDaySimpleFormat(fee.getDate()));
         TextView amount = (TextView) convertView.findViewById(R.id.histo_list_item_amount);
         amount.setText(fee.getAmount().replace(".", ",")+" €");
 		TextView label = (TextView) convertView.findViewById(R.id.histo_list_item_label);

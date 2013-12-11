@@ -26,6 +26,7 @@ public class DatabaseService {
 	private static final int DATABASE_VERSION = 1;
 	private static final String TABLE_NAME_FEE = "fee";
 	private static final String TABLE_NAME_CATEGORY = "category";
+	private static final String TABLE_NAME_PARAMETER = "parameter";
 
 	private Context context;
 	private SQLiteDatabase database;
@@ -40,11 +41,14 @@ public class DatabaseService {
 	public void bouchon() {
 		database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_FEE);
 		database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_CATEGORY);
+		database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_PARAMETER);
 
 		database.execSQL("create table " + TABLE_NAME_CATEGORY + "(id integer primary key, label TEXT, color TEXT, budget NUMERIC)");
 		database.execSQL("create table " + TABLE_NAME_FEE + "(id integer primary key, date DATE, amount NUMERIC, label TEXT, categoryid NUMERIC)");
+		database.execSQL("create table " + TABLE_NAME_PARAMETER + "(key TEXT primary key, val TEXT)");
 		
 		// TODO: inserts...
+		insertParameter("passwd", "1789");
 		insertCategory(new Category(null,"Restaurant","#046A26","20"));
 		insertCategory(new Category(null,"Courses","#015B72","200"));
 		insertCategory(new Category(null,"Sorties","#903522","50"));
@@ -57,6 +61,35 @@ public class DatabaseService {
 		insertFee(new Fee(null, "Kebab", "20.25","Courses", "2013-12-23"));
 		insertFee(new Fee(null, "Brice", "15.25","Courses", "2013-12-22"));
 		insertFee(new Fee(null, "Fnac", "3.25","Courses", "2013-12-21"));
+	}
+	
+	public void insertParameter(String key, String value) {
+		String sql = "insert into " + TABLE_NAME_PARAMETER
+				+ "(key, val) values (?,?)";
+		statement = database.compileStatement(sql);
+		statement.bindString(1, key);
+		statement.bindString(2, value);
+		statement.executeInsert();
+	}
+
+	public void updateParameter(String key, String value) {
+		ContentValues args = new ContentValues();
+		args.put("val", value);
+		database.update(TABLE_NAME_PARAMETER, args, "key=" + key, null);
+	}
+	
+	public String getParameter(String key) {
+		String req = "select val from parameter where key='" + key + "'";
+		Cursor cursor = database.rawQuery(req, null);				
+		if (cursor.moveToFirst()) {
+			do {
+				return cursor.getString(0);
+			} while (cursor.moveToNext());
+		}
+		if (cursor != null && !cursor.isClosed()) {
+			cursor.close();
+		}
+		return null;
 	}
 
 	public void insertFee(Fee fee) {
@@ -482,12 +515,14 @@ public class DatabaseService {
 		public void onCreate(SQLiteDatabase db) {
 			db.execSQL("create table " + TABLE_NAME_CATEGORY + "(id integer primary key, label TEXT, color TEXT, budget NUMERIC)");
 			db.execSQL("create table " + TABLE_NAME_FEE + "(id integer primary key, date DATE, amount NUMERIC, label TEXT, categoryid NUMERIC)");
+			db.execSQL("create table " + TABLE_NAME_PARAMETER + "(key TEXT primary key, val TEXT)");
 		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_FEE);
 			db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_CATEGORY);
+			db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_PARAMETER);
 			onCreate(db);
 		}
 	}

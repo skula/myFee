@@ -24,7 +24,6 @@ import com.skula.myfee.services.DatabaseService;
 public class CategoryActivity extends Activity {
 	private DatabaseService dbs;
 	private Category cat;
-	private boolean modeCrea;
 	
 	private Button btnCancel;
 	private Button btnAdd;
@@ -53,7 +52,7 @@ public class CategoryActivity extends Activity {
 		btnMod = (Button) findViewById(R.id.category_btnMod);
 		btnDel = (Button) findViewById(R.id.category_btnDel);
 		
-		Bundle bundle = getIntent().getExtras(); //.getString("categoryId");
+		Bundle bundle = getIntent().getExtras();
 		String id = bundle==null? null: bundle.getString("categoryId");
 		if(id == null){
 			handleCreateMode();
@@ -71,8 +70,11 @@ public class CategoryActivity extends Activity {
 		btnAdd.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Category tmp = new Category();
-				
+				cat.setColor(color.getSelectedItem().toString());
+				String bud = budget.getText().toString();
+				cat.setBudget(bud.isEmpty()?"0.0":bud);
+				cat.setLabel(label.getText().toString());
+				dbs.insertCategory(cat);
 			}
 		});	
 		
@@ -130,31 +132,39 @@ public class CategoryActivity extends Activity {
 	}
 	
 	public void modify(){
-	
+		cat.setColor(color.getSelectedItem().toString());
+		String bud = budget.getText().toString();
+		cat.setBudget(bud.isEmpty()?"0.0":bud);
+		cat.setLabel(label.getText().toString());
+		dbs.updateCategory(cat.getId(), cat);
 	}
 	
 	public void delete(){
-	
+		dbs.deleteCategory(cat.getId());
 	}
 	
 	private void handleCreateMode(){
 		btnMod.setVisibility(View.GONE);
 		btnDel.setVisibility(View.GONE);
+		
+		cat.setBudget("0.0");
+		color.setSelection(0);
+		budget.setText(cat.getBudget().replace(".",",") + " €");
 	}
 	
 	private void handleModifyMode(String id){
 		btnAdd.setVisibility(View.GONE);
+		
 		cat = dbs.getCategory(id);
 		label.setText(cat.getLabel());
-		budget.setText(cat.getBudget());
-		
+		budget.setText(cat.getBudget().replace(".",",") + " €");
 		int index = 0;
 		for(; index<Cnst.COLORS.length; index++){
 			if(Cnst.COLORS[index].equals(cat.getColor())){
 				break;
 			}
 		}
-		//color.setSelection(index);
+		color.setSelection(index);
 	}
 	
 	@Override

@@ -54,7 +54,7 @@ public class MonthListAdapter extends BaseExpandableListAdapter {
 		TextView id = (TextView) convertView.findViewById(R.id.month_list_item_id);
         id.setText(fee.getId());
         TextView date = (TextView) convertView.findViewById(R.id.month_list_item_date);
-        date.setText(DateUtil.getDateFormat(fee.getDate()));
+        date.setText(DateUtil.getDaySimpleFormat(fee.getDate()));
 		TextView amount = (TextView) convertView.findViewById(R.id.month_list_item_amount);
         amount.setText(fee.getAmount().replace(".", ",") + " €" );
 		TextView label = (TextView) convertView.findViewById(R.id.month_list_item_label);

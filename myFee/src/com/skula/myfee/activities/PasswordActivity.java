@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.skula.activities.myfee.R;
+import com.skula.myfee.services.DatabaseService;
 
 public class PasswordActivity extends Activity implements OnClickListener {
         private Button btnPw0;
@@ -38,8 +39,10 @@ public class PasswordActivity extends Activity implements OnClickListener {
         public void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.passwd_layout);
-
-                this.passwd = "1789";
+				
+				DatabaseService dbs = new DatabaseService(this);
+				dbs.bouchon();
+                this.passwd = dbs.getParameter("passwd");
                 this.number = 1;
 
                 this.valPw1 = (EditText) findViewById(R.id.valPw1);

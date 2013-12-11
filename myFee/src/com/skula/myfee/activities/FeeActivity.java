@@ -31,12 +31,13 @@ import com.skula.myfee.activities.dialogs.AmountDialog;
 import com.skula.myfee.models.Category;
 import com.skula.myfee.models.Fee;
 import com.skula.myfee.services.DatabaseService;
+import com.skula.myfee.utils.DateUtil;
 
 public class FeeActivity extends Activity {
 	private DatabaseService dbs;
+
 	private ListView listView;
 	private CategoryAdapter catAdapter;
-
 	private Button btnCancel;
 	private Button btnAdd;
 	private Button btnMod;
@@ -48,15 +49,12 @@ public class FeeActivity extends Activity {
 
 	private String tmpAmount;
 	private Fee fee;
-
-	final int Date_Dialog_ID = 0;
-	private int cDay, cMonth, cYear; // this is the instances of the current
-										// date
+	final int DATE_DIALOG_ID = 0;
+	private int cDay, cMonth, cYear;
 	private Calendar cDate;
-	private int sDay, sMonth, sYear; // this is the instances of the entered
-										// date
-
-	private boolean modeCrea;
+	private int sDay, sMonth, sYear;
+	private RadioButton listRadioButton = null;
+	private int listIndex = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +69,6 @@ public class FeeActivity extends Activity {
 
 		listView.setAdapter(catAdapter);
 		listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-		// int i = listView.getCheckedItemPosition();
 
 		btnCancel = (Button) findViewById(R.id.fee_btnCancel);
 		btnAdd = (Button) findViewById(R.id.fee_btnAdd);
@@ -83,15 +80,7 @@ public class FeeActivity extends Activity {
 		amount = (TextView) findViewById(R.id.fee_amount);
 		btnDate = (Button) findViewById(R.id.fee_btnDate);
 
-		// getting current date
-		cDate = Calendar.getInstance();
-		cDay = cDate.get(Calendar.DAY_OF_MONTH);
-		cMonth = cDate.get(Calendar.MONTH);
-		cYear = cDate.get(Calendar.YEAR);
-		// assigning the edittext with the current date in the beginning
-		sDay = cDay;
-		sMonth = cMonth;
-		sYear = cYear;
+		initDate();
 		updateDateDisplay(sYear, sMonth, sDay);
 
 		Bundle bundle = getIntent().getExtras();
@@ -112,9 +101,10 @@ public class FeeActivity extends Activity {
 		});
 
 		btnDate.setOnClickListener(new OnClickListener() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void onClick(View v) {
-				showDialog(Date_Dialog_ID);
+				showDialog(DATE_DIALOG_ID);
 			}
 		});
 
@@ -129,16 +119,17 @@ public class FeeActivity extends Activity {
 			@SuppressLint("ShowToast")
 			@Override
 			public void onClick(View v) {
-
-				Category c = (Category)listView.getItemAtPosition(listIndex);
-				Toast.makeText(v.getContext(), "pos: ", Toast.LENGTH_SHORT);
-				/*Fee tmp = new Fee();
-				tmp.setLabel(label.getText().toString());
-				tmp.setDate(date.getText().toString());
-				tmp.setAmount(fee.getAmount());
-				dbs.insertFee(tmp);
-				Toast.makeText(v.getContext(), "Dépense ajoutée.",
-						Toast.LENGTH_SHORT).show();*/
+				Category c = (Category) listView.getItemAtPosition(listIndex);
+				fee.setLabel(label.getText().toString());
+				fee.setAmount(fee.getAmount());
+				fee.setCategory(c.getLabel());
+				dbs.insertFee(fee);
+				Toast.makeText(v.getContext(), "Nouvelle dépense ajoutée",
+						Toast.LENGTH_LONG);
+				act.finish();
+				
+				Intent intent = new Intent(v.getContext(), MonthActivity.class);
+				startActivity(intent);
 			}
 		});
 
@@ -152,9 +143,7 @@ public class FeeActivity extends Activity {
 		btnDel.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//handleDelete(act);
-				
-				Toast.makeText(v.getContext(), "pos: " + listView.getSelectedItemPosition(), Toast.LENGTH_SHORT);
+				handleDelete(act);
 			}
 		});
 
@@ -162,39 +151,44 @@ public class FeeActivity extends Activity {
 		ad.show();
 	}
 
-	private RadioButton listRadioButton = null;
-	   int listIndex = -1;
+	private void initDate() {
+		cDate = Calendar.getInstance();
+		cDay = cDate.get(Calendar.DAY_OF_MONTH);
+		cMonth = cDate.get(Calendar.MONTH);
+		cYear = cDate.get(Calendar.YEAR);
+		sDay = cDay;
+		sMonth = cMonth;
+		sYear = cYear;
+	}
 
-	   public void onClickRadioButton(View v) {
-	        View vMain = ((View) v.getParent());
-	        // getParent() must be added 'n' times, 
-	        // where 'n' is the number of RadioButtons' nested parents
-	        // in your case is one.
+	public void onClickRadioButton(View v) {
+		View vMain = ((View) v.getParent());
+		// uncheck previous checked button.
+		if (listRadioButton != null) {
+			listRadioButton.setChecked(false);
+		}
+		// assign to the variable the new one
+		listRadioButton = (RadioButton) v;
+		// find if the new one is checked or not, and set "listIndex"
+		if (listRadioButton.isChecked()) {
+			listIndex = ((ViewGroup) vMain.getParent()).indexOfChild(vMain);
+		} else {
+			// listRadioButton = null;
+			// listIndex = -1;
+		}
+	}
 
-	        // uncheck previous checked button. 
-	        if (listRadioButton != null) listRadioButton.setChecked(false);
-	        // assign to the variable the new one
-	        listRadioButton = (RadioButton) v;
-	        // find if the new one is checked or not, and set "listIndex"
-	        if (listRadioButton.isChecked()) {
-	            listIndex = ((ViewGroup) vMain.getParent()).indexOfChild(vMain); 
-	        } else {
-	            listRadioButton = null;
-	            listIndex = -1;
-	        }
-	    }
-	   
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
-		case Date_Dialog_ID:
+		case DATE_DIALOG_ID:
 			return new DatePickerDialog(this, onDateSet, cYear, cMonth, cDay);
 		}
 		return null;
 	}
 
 	private void updateDateDisplay(int year, int month, int day) {
-		date.setText(day + "/" + (month + 1) + "/" + year);
+		date.setText(DateUtil.getDayCompleteFormat(day, month + 1, year));
 		fee.setDate(year + "-" + (month + 1) + "-" + day);
 	}
 
@@ -250,12 +244,10 @@ public class FeeActivity extends Activity {
 	}
 
 	public void modify() {
-		Fee tmp = new Fee();
-		tmp.setLabel(label.getText().toString());
-		tmp.setDate(date.getText().toString());
-		// TODO : get color
-		tmp.setAmount(fee.getAmount());
-		dbs.updateFee(fee.getId(), tmp);
+		fee.setLabel(label.getText().toString());
+		Category c = (Category) listView.getItemAtPosition(listIndex);
+		fee.setCategory(c.getLabel());
+		dbs.updateFee(fee.getId(), fee);
 	}
 
 	public void delete() {
@@ -272,8 +264,9 @@ public class FeeActivity extends Activity {
 		fee = dbs.getFee(id);
 		label.setText(fee.getLabel());
 		date.setText(fee.getDate());
-		amount.setText(fee.getAmount().replace(".", ",") + " €");
-		// TODO : set color
+		amount.setText(fee.getAmount());
+		String c = fee.getColor();
+		// listView.set
 	}
 
 	public void setAmount(String amnt) {
