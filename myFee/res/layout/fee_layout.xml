@@ -116,16 +116,17 @@
 
             <EditText
                 android:id="@+id/fee_date"
-                android:layout_width="600px"
+                android:layout_width="500px"
                 android:layout_height="wrap_content"
                 android:paddingBottom="15px"
                 android:paddingLeft="20px"
                 android:paddingTop="15px"
+                android:editable="false"
                 android:textColor="#3c3c3c"
                 android:textSize="18dip" />
 			<Button
 				android:id="@+id/fee_btnDate"
-				android:layout_width="wrap_content"
+				android:layout_width="100px"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
 				android:background="@drawable/btn_grey"

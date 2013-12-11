@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.skula.activities.myfee.R;
@@ -43,8 +44,6 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
 		TextView label = (TextView) row.findViewById(R.id.category_item_label);
 		label.setText(itemList.get(position).getLabel());
 		
-		//CheckedTextView checkBox = (CheckedTextView) row.findViewById(R.id.category_item_state);
-		//checkBox.setChecked(true);//list.getCheckedItemPosition() == position);
 		return (row);
 	}
 }
