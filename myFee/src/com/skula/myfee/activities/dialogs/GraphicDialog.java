@@ -49,10 +49,10 @@ public class GraphicDialog extends Dialog implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch(v.getId()){
-		case R.id.amount_btn_cancel:
+		case R.id.graphic_dial_btn_cancel:
 			dismiss();			
 			break;
-		case R.id.amount_btn_continue:
+		case R.id.graphic_dial_btn_continue:
 			String type = typeSpin.getItemAtPosition(typeSpin.getSelectedItemPosition()).toString();
 			String unit = unitSpin.getItemAtPosition(unitSpin.getSelectedItemPosition()).toString();
 			String month = monthSpin.getItemAtPosition(monthSpin.getSelectedItemPosition()).toString();

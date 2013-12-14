@@ -2,6 +2,7 @@ package com.skula.myfee.activities.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -10,7 +11,9 @@ import com.skula.myfee.models.RingGraphic;
 import com.skula.myfee.services.DrawerService;
 
 public class GraphicView extends View {
-	private DrawerService drawer;
+	private CurveGraphic cGraph;
+	private RingGraphic rGraph;
+	
 	// android:clearTaskOnLaunch
 	// android:noHistory
 	
@@ -19,12 +22,14 @@ public class GraphicView extends View {
 	}
 	
 	public void init(RingGraphic gr){
-		this.drawer = new DrawerService(getContext(), gr);
+		this.rGraph = gr;
+		this.cGraph = null;
 		invalidate();
 	}
 	
 	public void init(CurveGraphic gr){
-		this.drawer = new DrawerService(getContext(), gr);
+		this.cGraph = gr;
+		this.rGraph = null;
 		invalidate();
 	}
 
@@ -49,6 +54,12 @@ public class GraphicView extends View {
 	
 	@Override
 	public void draw(Canvas canvas) {
-		//drawer.draw(canvas);
+		canvas.drawColor(Color.WHITE);
+		if(rGraph!=null){
+			DrawerService.drawRings(canvas, rGraph);
+		}else if(cGraph!=null){
+			//DrawerService.drawCurves(canvas, cGraph);
+			DrawerService.drawRings(canvas, rGraph);
+		}
 	}
 }

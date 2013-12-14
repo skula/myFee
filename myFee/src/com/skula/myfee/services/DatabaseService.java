@@ -1,6 +1,8 @@
 package com.skula.myfee.services;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +29,7 @@ public class DatabaseService {
 	private static final String TABLE_NAME_FEE = "fee";
 	private static final String TABLE_NAME_CATEGORY = "category";
 	private static final String TABLE_NAME_PARAMETER = "parameter";
+	private static final String TABLE_NAME_DATELIST = "datelist";
 
 	private Context context;
 	private SQLiteDatabase database;
@@ -42,12 +45,15 @@ public class DatabaseService {
 		database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_FEE);
 		database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_CATEGORY);
 		database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_PARAMETER);
+		database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_DATELIST);
 
 		database.execSQL("create table " + TABLE_NAME_CATEGORY + "(id integer primary key, label TEXT, color TEXT, budget NUMERIC)");
 		database.execSQL("create table " + TABLE_NAME_FEE + "(id integer primary key, date DATE, amount NUMERIC, label TEXT, categoryid NUMERIC)");
 		database.execSQL("create table " + TABLE_NAME_PARAMETER + "(key TEXT primary key, val TEXT)");
+		database.execSQL("create table " + TABLE_NAME_DATELIST + "(date DATE, month INTEGER, week INTEGER)");
 		
 		// TODO: inserts...
+		//initDates();
 		insertParameter("passwd", "1789");
 		insertCategory(new Category(null,"Restaurant","#046A26","20"));
 		insertCategory(new Category(null,"Courses","#015B72","200"));
@@ -61,6 +67,45 @@ public class DatabaseService {
 		insertFee(new Fee(null, "Kebab", "20.25","Courses", "2013-12-23"));
 		insertFee(new Fee(null, "Brice", "15.25","Courses", "2013-12-22"));
 		insertFee(new Fee(null, "Fnac", "3.25","Courses", "2013-12-21"));
+	}
+	
+	public void insertDate(String date, int month, int week) {
+		String sql = "insert into " + TABLE_NAME_DATELIST
+				+ "(date, month, week) values (?,?,?)";
+		statement = database.compileStatement(sql);
+		statement.bindString(1, date);
+		statement.bindLong(2, month);
+		statement.bindLong(3, week);
+		statement.executeInsert();
+	}
+	
+	public void initDates(){
+		database.delete(TABLE_NAME_DATELIST, null, null);
+
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.DAY_OF_MONTH, 1);
+		cal.set(Calendar.MONTH, 0);
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+		int month = cal.get(Calendar.MONTH);
+		int dayOfYear = cal.get(Calendar.DAY_OF_YEAR);
+		int year = cal.get(Calendar.YEAR);
+		int daysCount = year % 4 == 0 ? 366 : 365;
+		int currentYear = cal.get(Calendar.YEAR);
+		while (dayOfYear <= daysCount && year == currentYear) {
+			String date = sdf.format(cal.getTime());
+			int week = cal.get(Calendar.WEEK_OF_YEAR) - 1;
+			if(month==11 && week==0){
+				week = 52;
+			}
+			
+			insertDate(date, month+1, week);
+			cal.add(Calendar.DAY_OF_YEAR, 1);
+			dayOfYear = cal.get(Calendar.DAY_OF_YEAR);
+			month = cal.get(Calendar.MONTH);
+			year = cal.get(Calendar.YEAR);
+		}
 	}
 	
 	public void insertParameter(String key, String value) {
@@ -516,6 +561,7 @@ public class DatabaseService {
 			db.execSQL("create table " + TABLE_NAME_CATEGORY + "(id integer primary key, label TEXT, color TEXT, budget NUMERIC)");
 			db.execSQL("create table " + TABLE_NAME_FEE + "(id integer primary key, date DATE, amount NUMERIC, label TEXT, categoryid NUMERIC)");
 			db.execSQL("create table " + TABLE_NAME_PARAMETER + "(key TEXT primary key, val TEXT)");
+			db.execSQL("create table " + TABLE_NAME_DATELIST + "(date DATE, month INTEGER, week INTEGER)");
 		}
 
 		@Override
@@ -523,6 +569,7 @@ public class DatabaseService {
 			db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_FEE);
 			db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_CATEGORY);
 			db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_PARAMETER);
+			db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_DATELIST);
 			onCreate(db);
 		}
 	}
