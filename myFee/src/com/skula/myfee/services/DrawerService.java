@@ -7,10 +7,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
-import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
+import com.skula.myfee.models.Category;
 import com.skula.myfee.models.CurveGraphic;
 import com.skula.myfee.models.RingGraphic;
 import com.skula.myfee.models.TimeUnit;
@@ -76,53 +76,61 @@ public class DrawerService {
 	}
 	
 	public static void drawRings(Canvas canvas, RingGraphic graph) {
-		float width = 1280.0f;
-		float height =  800.0f;
 		float radius;
-
-		if (width > height){
-			radius = height/3;
+		if (WIDTH > HEIGH){
+			radius = HEIGH/3;
 		}else{
-			radius = width/4;
+			radius = WIDTH/4;
 		}
-
-		Path path = new Path();
-		path.addCircle(width/2, 
-		height/2, radius, 
-		Path.Direction.CW);
-
+		
+		//Path path = new Path();
+		//path.addCircle(WIDTH/2, HEIGHT/2, radius, Path.Direction.CW);
+		
 		Paint paint = new Paint();
-		paint.setColor(Color.BLACK);
-		paint.setStrokeWidth(5);	
-
+		paint.setStyle(Paint.Style.STROKE); //Paint.Style.FILL
+		paint.setStrokeWidth(50f);
+		
 		float center_x, center_y;
 		final RectF oval = new RectF();
-		// paint.setStyle(Paint.Style.FILL);
-		paint.setStyle(Paint.Style.STROKE);
-		paint.setStrokeWidth(50f);
-		//center_x = width/2;
-		//center_y = height/4;
-		center_x = width/2;
-		center_y = height/2 -50;
-		oval.set(center_x - radius, 
-		center_y - radius, 
-		center_x + radius, 
-		center_y + radius);
+		center_x = WIDTH/3;
+		center_y = HEIGH/2 -50;
+		oval.set(center_x - radius, center_y - radius, center_x + radius, center_y + radius);
+		
 		/* 
-		 * 0° est le point au milieu droite du cercle
+		 * 0° est le point au milieu droit du cercle
 		 * 180° est le point au milieu gauche du cercle
 		 * les sens de rotation est anti horaire
 		 */
-		canvas.drawArc(oval, 0, 270, false, paint);
-		//canvas.drawArc(oval, 90, 270, true, paint);
+		int dStart = 0;
+		int dEnd = 0;
+		int index = 0;
+		for(Category cat : graph.getCategories()){
+			paint.setStyle(Paint.Style.STROKE); //Paint.Style.FILL
+			paint.setStrokeWidth(50f);
+			int arc = (int) (Double.valueOf(cat.getPercent())*360/100);
+			dEnd = dEnd + arc;
+			paint.setColor(Color.parseColor(cat.getColor()));
+			canvas.drawArc(oval, dStart, dEnd, false, paint); //true	
+			dStart = dEnd;
 		
-		paint.setStyle(Paint.Style.FILL);
-		paint.setTextSize(80f);
-		paint.setTextAlign(Align.CENTER);
-		paint.setStrokeWidth(1f);
-		canvas.drawText("1700,50 €", width/2, height/2-80, paint);
-		canvas.drawText("Restaurant", width/2, height/2, paint);
-		paint.setTextSize(60f);
-		canvas.drawText("19,6%", width/2, height/2+80, paint);
+			canvas.drawRect(new Rect(200, 100 + index * 180, 200 + 50, 100 + 50 + index * 180), paint); 
+			paint.setTextSize(80f);
+			paint.setTextAlign(Align.CENTER);
+			paint.setStrokeWidth(1f);
+			canvas.drawText(cat.getLabel(), 300, 100 + index * 180, paint);
+			//canvas.drawText(cat.getTotal().replace(".",",") + " €", WIDTH/2, HEIGHT/2-80, paint);		
+			//paint.setTextSize(60f);
+			//canvas.drawText(cat.getPercent()+"%", WIDTH/2, HEIGHT/2+80, paint);
+			
+			
+			/*paint.setStyle(Paint.Style.FILL);
+			paint.setTextSize(80f);
+			paint.setTextAlign(Align.CENTER)
+			paint.setStrokeWidth(1f);
+			canvas.drawText(cat.getTotal().replace(".",",") + " €", WIDTH/2, HEIGHT/2-80, paint);
+			canvas.drawText(cat.getLabel(), WIDTH/2, HEIGHT/2, paint);
+			paint.setTextSize(60f);
+			canvas.drawText(cat.getPercent()+"%", WIDTH/2, HEIGHT/2+80, paint);*/
+		}	
 	}
 }

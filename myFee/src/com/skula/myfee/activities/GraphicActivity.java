@@ -3,9 +3,9 @@ package com.skula.myfee.activities;
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.skula.myfee.activities.dialogs.GraphicDialog;
 import com.skula.myfee.activities.views.GraphicView;
 import com.skula.myfee.models.CurveGraphic;
+import com.skula.myfee.models.RingGraphic;
 import com.skula.myfee.services.DatabaseService;
 
 
@@ -21,8 +21,11 @@ public class GraphicActivity extends Activity {
 		
 		DatabaseService dbs = new DatabaseService(this); 
 	
-		CurveGraphic g = dbs.getGraphByWeek(40,50);
+		//CurveGraphic g = dbs.getGraphByWeek(40,50);
 		
+		//graphicView.init(g);
+		
+		RingGraphic g = dbs.getGraphCircle("2013-11-01", "2013-12-31");
 		graphicView.init(g);
 		
 		//GraphicDialog gd = new GraphicDialog(this);
@@ -30,8 +33,9 @@ public class GraphicActivity extends Activity {
 	}
 	
 	public void init(String type, String unit, String count){
-		DatabaseService dbs = new DatabaseService(this); 
-		CurveGraphic g = dbs.getGraphByWeek(40,50);
+		DatabaseService dbs = new DatabaseService(this);
+		//CurveGraphic g = dbs.getGraphByWeek(40,50);
+		RingGraphic g = dbs.getGraphCircle("2013-11-01", "2013-12-31");
 		graphicView.init(g);
 	}
 }
